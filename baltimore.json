@@ -1,0 +1,86 @@
+[
+  {
+    "city": "Baltimore",
+    "taskName": "Weekly Booklet Reading",
+    "avg2024": 49.83,
+    "avg2025": 54.33,
+    "performanceChange": 9.01
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Pious Deeds Booklet",
+    "avg2024": 0,
+    "avg2025": 0,
+    "performanceChange": 0
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Waking up for Fajr",
+    "avg2024": 4.67,
+    "avg2025": 5.33,
+    "performanceChange": 14.13
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Session for listening Tafseer of Quran",
+    "avg2024": 23.83,
+    "avg2025": 31,
+    "performanceChange": 30.08
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Madani Qafila",
+    "avg2024": 1,
+    "avg2025": 1,
+    "performanceChange": 0
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Dars",
+    "avg2024": 1.17,
+    "avg2025": 1,
+    "performanceChange": -14.29
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Madrasa-tul-Madinah Balighan / Balighat",
+    "avg2024": 2,
+    "avg2025": 1.83,
+    "performanceChange": -8.33
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Madani Courses",
+    "avg2024": 7.67,
+    "avg2025": 7.17,
+    "performanceChange": -6.52
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Individual Efforts",
+    "avg2024": 7.75,
+    "avg2025": 7.17,
+    "performanceChange": -7.48
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Weekly Ijtima",
+    "avg2024": 0.17,
+    "avg2025": 0,
+    "performanceChange": -100
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Weekly Madani Muzakara",
+    "avg2024": 6.58,
+    "avg2025": 6.67,
+    "performanceChange": 1.37
+  },
+  {
+    "city": "Baltimore",
+    "taskName": "Area Visit",
+    "avg2024": 0.83,
+    "avg2025": 0,
+    "performanceChange": -100
+  }
+]
