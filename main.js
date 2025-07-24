@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ✅ Wait until HTML is ready
-
   const input = document.getElementById('excelInput');
   const tableContainer = document.getElementById('metricsTable');
 
@@ -21,23 +19,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const sheet = workbook.Sheets["Sheet1"];
         const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-        // 🔍 Dynamically locate rows by label
-        const labelRow = rows.find(row => row.includes("Weekly Booklet Reading"));
-        const avg2024 = rows.find(row => row.includes("2024 Avg"));
-        const avg2025 = rows.find(row => row.includes("2025 Avg"));
+        // 🌐 Locate key rows using relaxed matching
+        const row2024 = rows.find(row =>
+          row.some(cell => typeof cell === 'string' && cell.toLowerCase().includes("2024 avg"))
+        );
+        const row2025 = rows.find(row =>
+          row.some(cell => typeof cell === 'string' && cell.toLowerCase().includes("2025 avg"))
+        );
+        const labelRow = rows.find(row =>
+          row.some(cell => typeof cell === 'string' && cell.toLowerCase().includes("waking up for fajr"))
+        );
 
-        if (!labelRow || !avg2024 || !avg2025) {
-          console.warn("Could not locate expected header or data rows");
+        if (!row2024 || !row2025 || !labelRow) {
+          console.warn("Could not locate 2024 Avg, 2025 Avg, or starting label row");
           tableContainer.innerHTML = `<p>No recognizable metrics found. Please check your Excel file.</p>`;
           return;
         }
 
-        // 🧠 Build metrics
+        // 🧠 Build metrics starting from "Waking up for fajr"
+        const startColIndex = labelRow.findIndex(cell =>
+          typeof cell === 'string' && cell.toLowerCase().includes("waking up for fajr")
+        );
+
         const metrics = [];
-        for (let i = 1; i < labelRow.length; i++) {
+        for (let i = startColIndex; i < labelRow.length; i++) {
           const label = labelRow[i];
-          const val2024 = avg2024[i];
-          const val2025 = avg2025[i];
+          const val2024 = row2024[i];
+          const val2025 = row2025[i];
+
           if (typeof val2024 === 'number' && typeof val2025 === 'number') {
             const diff = val2025 - val2024;
             const pct = val2024 !== 0 ? ((diff / val2024) * 100).toFixed(1) : '—';
@@ -55,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsArrayBuffer(file);
   });
 
-  // 📊 Render table to DOM
+  // 🖼️ Display the metrics in a table
   function renderMetrics(metrics) {
     tableContainer.innerHTML = '';
 
