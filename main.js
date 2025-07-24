@@ -16,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const labels = rows[13];
       const avg2024 = rows[34];
       const avg2025 = rows[64];
-
+console.log('Sheet rows:', rows);
+console.log('Label Row:', rows[13]);
+console.log('2024 Avg:', rows[34]);
+console.log('2025 Avg:', rows[64]);
       const metrics = [];
       for (let i = 1; i < labels.length; i++) {
         const label = labels[i];
