@@ -3,26 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Excel Viewer</title>
+  <title>Madani Metrics Dashboard</title>
   <link rel="stylesheet" href="ui-branding.css" />
-  <!-- ✅ SheetJS CDN -->
   <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <main>
-    <h1>📊 Excel Data Viewer</h1>
+    <h1>🌙 Madani Performance Dashboard</h1>
 
-    <!-- File Input -->
-    <label for="excelInput" class="upload-label" aria-label="Upload Excel file">
-      Select Excel File (.xlsx)
-    </label>
-    <input type="file" id="excelInput" accept=".xlsx" />
+    <section id="upload-zone">
+      <label for="excelInput" class="upload-label">📁 Upload Excel File</label>
+      <input type="file" id="excelInput" accept=".xlsx" />
+    </section>
 
-    <!-- Table Container -->
-    <div id="tableContainer" role="region" aria-live="polite"></div>
+    <section id="summary-section" aria-live="polite">
+      <h2>📊 Year-over-Year Metrics</h2>
+      <div id="metricsTable"></div>
+    </section>
   </main>
 
-  <!-- Script -->
   <script src="main.js"></script>
 </body>
 </html>
