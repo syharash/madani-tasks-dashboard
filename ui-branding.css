@@ -1,0 +1,26 @@
+/* ui-branding.css */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
+  background-color: var(--table-bg, #fff);
+  color: var(--table-text, #000);
+}
+
+.styled-table th,
+.styled-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.styled-table thead {
+  background-color: #0078d7;
+  color: white;
+}
+
+body.high-contrast .styled-table {
+  background-color: black;
+  color: yellow;
+}
