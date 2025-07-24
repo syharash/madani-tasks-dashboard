@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Madani Metrics Dashboard</title>
+  <title>🌙 Madani Performance Dashboard</title>
   <link rel="stylesheet" href="ui-branding.css" />
   <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
@@ -18,10 +18,23 @@
 
     <section id="summary-section" aria-live="polite">
       <h2>📊 Year-over-Year Metrics</h2>
-      <div id="metricsTable"></div>
+      <div id="metrics-table-container">
+        <table id="metrics-table">
+          <thead>
+            <tr>
+              <th>Label</th>
+              <th>2024 Avg</th>
+              <th>2025 Avg</th>
+              <th>Diff</th>
+              <th>% Change</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </section>
   </main>
 
-  <script type="module" src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
