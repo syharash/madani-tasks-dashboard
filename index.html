@@ -5,22 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Excel Viewer</title>
   <link rel="stylesheet" href="ui-branding.css" />
+  <!-- ✅ SheetJS CDN -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
 <body>
   <main>
     <h1>📊 Excel Data Viewer</h1>
 
-    <!-- File Input with ARIA Labeling -->
-    <label for="excelInput" aria-label="Upload Excel file" class="upload-label">
+    <!-- File Input -->
+    <label for="excelInput" class="upload-label" aria-label="Upload Excel file">
       Select Excel File (.xlsx)
     </label>
     <input type="file" id="excelInput" accept=".xlsx" />
 
-    <!-- Container for Rendered Table -->
+    <!-- Table Container -->
     <div id="tableContainer" role="region" aria-live="polite"></div>
   </main>
 
-  <!-- Script Modules -->
-  <script type="module" src="main.js"></script>
+  <!-- Script -->
+  <script src="main.js"></script>
 </body>
 </html>
