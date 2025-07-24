@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx';
+import * as XLSX from "https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs";
 
 function handleFileUpload(file) {
   const reader = new FileReader();
