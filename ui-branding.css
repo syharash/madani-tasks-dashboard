@@ -1,11 +1,27 @@
-/* ui-branding.css */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 2rem;
+  background-color: #f7faff;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #0078D7;
+}
+
+#upload-zone {
+  padding: 1rem;
+  border: 2px dashed #0078D7;
+  background-color: #eef6ff;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
 .styled-table {
   width: 100%;
   border-collapse: collapse;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 14px;
-  background-color: var(--table-bg, #fff);
-  color: var(--table-text, #000);
+  margin-top: 1rem;
 }
 
 .styled-table th,
@@ -16,11 +32,13 @@
 }
 
 .styled-table thead {
-  background-color: #0078d7;
+  background-color: #0078D7;
   color: white;
 }
 
-body.high-contrast .styled-table {
-  background-color: black;
-  color: yellow;
+.gain {
+  background-color: rgba(0, 200, 0, 0.2);
+}
+.loss {
+  background-color: rgba(200, 0, 0, 0.2);
 }
