@@ -48,12 +48,16 @@ function renderMetrics(metrics) {
   metrics.forEach(({ label, val2024, val2025, diff, pct }) => {
     const row = document.createElement("tr");
 
-    // Assign class based on pct value
-    let pctClass = "neutral";
-    if (pct !== "—") {
-      const pctValue = parseFloat(pct);
-      pctClass = pctValue > 0 ? "positive" : pctValue < 0 ? "negative" : "neutral";
-    }
+    // Parse numeric part of % for reliable comparison
+    let pctValue = pct === "—" ? null : parseFloat(pct);
+    let pctClass =
+      pctValue === null
+        ? "neutral"
+        : pctValue > 0
+        ? "positive"
+        : pctValue < 0
+        ? "negative"
+        : "neutral";
 
     row.innerHTML = `
       <td>${label}</td>
