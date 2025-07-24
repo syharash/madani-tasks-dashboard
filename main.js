@@ -1,61 +1,174 @@
-document.getElementById("excelInput").addEventListener("change", (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+// === CONFIG ===
+const CLIENT_ID = "515935803707-v7qshp425m1b4h5ru6jcmmmu99qbikgq.apps.googleusercontent.com";
+const DEVELOPER_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw";
+const APP_ID = "dashboard-466918";
 
-  const reader = new FileReader();
-  reader.onload = function (event) {
-    const data = new Uint8Array(event.target.result);
-    const workbook = XLSX.read(data, { type: "array" });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+const SCOPES = [
+  "https://www.googleapis.com/auth/drive.readonly",
+  "https://www.googleapis.com/auth/spreadsheets.readonly",
+];
 
-    const metrics = parseMetrics(rows.slice(1));
-    renderMetrics(metrics);
-  };
-  reader.readAsArrayBuffer(file);
-});
+let pickerApiLoaded = false;
+let oauthToken;
 
-function parseMetrics(dataRows) {
-  const metrics = [];
+// === INIT ===
+function onApiLoad() {
+  gapi.load("client:auth2", initAuth);
+  gapi.load("picker", () => (pickerApiLoaded = true));
+}
 
-  dataRows.forEach((row) => {
-    const label = row[0];
-    const val2024 = row[1];
-    const val2025 = row[2];
+function initAuth() {
+  gapi.auth2
+    .init({ client_id: CLIENT_ID, scope: SCOPES.join(" ") })
+    .then(() =>
+      gapi.auth2.getAuthInstance().signIn().then((user) => {
+        oauthToken = user.getAuthResponse().access_token;
+      })
+    );
+}
 
-    if (typeof label !== "string") return;
-    if (typeof val2024 === "number" && typeof val2025 === "number") {
+window.addEventListener("DOMContentLoaded", onApiLoad);
+
+// === PICKER ===
+function openPicker() {
+  if (pickerApiLoaded && oauthToken) {
+    const view = new google.picker.View(google.picker.ViewId.SPREADSHEETS);
+    const picker = new google.picker.PickerBuilder()
+      .enableFeature(google.picker.Feature.SIMPLE_UPLOAD_ENABLED)
+      .setAppId(APP_ID)
+      .setOAuthToken(oauthToken)
+      .addView(view)
+      .setDeveloperKey(DEVELOPER_KEY)
+      .setCallback(pickerCallback)
+      .build();
+    picker.setVisible(true);
+  }
+}
+
+function pickerCallback(data) {
+  if (data.action === google.picker.Action.PICKED) {
+    const docId = data.docs[0].id;
+    const range = "Sheet1"; // adjust if needed
+
+    gapi.client.sheets.spreadsheets.values
+      .get({ spreadsheetId: docId, range })
+      .then((res) => {
+        const rows = res.result.values;
+        const header = rows[0];
+        const dataRows = rows.slice(1);
+        const parsed = parseMetrics(dataRows);
+        window._allMetrics = parsed;
+        populateRegionTypeDropdown(parsed);
+        filterAndRender();
+      })
+      .catch((err) => console.error("Sheet fetch failed:", err));
+  }
+}
+
+// === METRIC LOGIC ===
+function parseMetrics(rows) {
+  return rows
+    .map((row) => {
+      const label = row[0];
+      const val2024 = parseFloat(row[1]);
+      const val2025 = parseFloat(row[2]);
+      const regionType = row[3];
+      const regionName = row[4];
+
+      if (!label || isNaN(val2024) || isNaN(val2025)) return null;
+
       const diff = val2025 - val2024;
-      const pct = val2024 !== 0 ? ((diff / val2024) * 100).toFixed(1) : "—";
+      const pctRaw = val2024 !== 0 ? (diff / val2024) * 100 : null;
 
-      metrics.push({
+      return {
         label,
         val2024: val2024.toFixed(2),
         val2025: val2025.toFixed(2),
         diff: diff.toFixed(2),
-        pct: pct + "%",
-      });
-    }
+        pct: pctRaw !== null ? pctRaw.toFixed(1) + "%" : "—",
+        pctRaw,
+        regionType,
+        regionName,
+      };
+    })
+    .filter(Boolean);
+}
+
+function populateRegionTypeDropdown(metrics) {
+  const regionTypeSelect = document.getElementById("regionType");
+  regionTypeSelect.innerHTML = `
+    <option value="All">All</option>
+    <option value="City">City</option>
+    <option value="State">State</option>
+    <option value="Country">Country</option>
+  `;
+  regionTypeSelect.disabled = false;
+
+  regionTypeSelect.onchange = () => {
+    populateRegionNameDropdown(metrics);
+    filterAndRender();
+  };
+
+  populateRegionNameDropdown(metrics);
+}
+
+function populateRegionNameDropdown(metrics) {
+  const regionType = document.getElementById("regionType").value;
+  const regionNameSelect = document.getElementById("regionName");
+  regionNameSelect.innerHTML = "";
+
+  if (regionType === "All") {
+    regionNameSelect.disabled = true;
+    regionNameSelect.innerHTML = `<option value="All">All</option>`;
+    return;
+  }
+
+  const regionSet = new Set(
+    metrics
+      .filter((m) => m.regionType === regionType)
+      .map((m) => m.regionName)
+  );
+
+  regionNameSelect.disabled = false;
+  regionNameSelect.innerHTML = `<option value="All">All ${regionType}s</option>`;
+  [...regionSet].sort().forEach((name) => {
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    regionNameSelect.appendChild(opt);
   });
 
-  return metrics;
+  regionNameSelect.onchange = filterAndRender;
+}
+
+function filterAndRender() {
+  const allMetrics = window._allMetrics || [];
+  const regionType = document.getElementById("regionType").value;
+  const regionName = document.getElementById("regionName").value;
+
+  let filtered = allMetrics;
+  if (regionType !== "All" && regionName !== "All") {
+    filtered = allMetrics.filter(
+      (m) => m.regionType === regionType && m.regionName === regionName
+    );
+  }
+
+  renderMetrics(filtered);
 }
 
 function renderMetrics(metrics) {
   const tbody = document.querySelector("#metrics-table tbody");
   tbody.innerHTML = "";
 
-  metrics.forEach(({ label, val2024, val2025, diff, pct }) => {
+  metrics.forEach(({ label, val2024, val2025, diff, pct, pctRaw }) => {
     const row = document.createElement("tr");
 
-    // Parse numeric part of % for reliable comparison
-    let pctValue = pct === "—" ? null : parseFloat(pct);
     let pctClass =
-      pctValue === null
+      pctRaw === null
         ? "neutral"
-        : pctValue > 0
+        : pctRaw > 0
         ? "positive"
-        : pctValue < 0
+        : pctRaw < 0
         ? "negative"
         : "neutral";
 
