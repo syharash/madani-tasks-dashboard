@@ -139,14 +139,15 @@ const sheetIndex = {
   }
 };
 
-// 👇 Safely wraps sheet name in single quotes and encodes
+// 🔒 Wrap and encode sheet name + range safely
 function getEncodedRange(rangeStr) {
   const [sheetName, cellRange] = rangeStr.split("!");
-  const quotedSheet = `'${sheetName}'`;
-  return encodeURIComponent(`${quotedSheet}!${cellRange}`);
+  const quotedSheetName = `'${sheetName}'`; // Safe for hyphens/spaces
+  const fullRange = `${quotedSheetName}!${cellRange}`;
+  return encodeURIComponent(fullRange);
 }
 
-// ✅ Optional: Validates that file is a Google Sheet
+// ✅ Optional: make sure ID points to a real Sheet
 async function validateGoogleSheetId(fileId) {
   const res = await fetch(
     `https://www.googleapis.com/drive/v3/files/${fileId}?fields=mimeType`,
@@ -159,9 +160,9 @@ async function validateGoogleSheetId(fileId) {
 }
 
 async function fetchSheetData(config) {
-  const safeRange = getEncodedRange(config.range);
+  const encodedRange = getEncodedRange(config.range);
   const res = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${safeRange}`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${encodedRange}`,
     {
       headers: { Authorization: `Bearer ${accessToken}` }
     }
@@ -170,7 +171,6 @@ async function fetchSheetData(config) {
   return data.values || [];
 }
 
-// 🧠 Token handling
 document.getElementById("signin-btn").onclick = () => {
   const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
@@ -183,7 +183,6 @@ document.getElementById("signin-btn").onclick = () => {
   tokenClient.requestAccessToken();
 };
 
-// 🎯 Region select logic
 document.getElementById("region-select").addEventListener("change", async (e) => {
   const key = e.target.value;
   const config = sheetIndex[key];
@@ -192,8 +191,8 @@ document.getElementById("region-select").addEventListener("change", async (e) =>
   if (!config) return alert("⚠️ Region not found.");
 
   try {
-    const isValidSheet = await validateGoogleSheetId(config.id);
-    if (!isValidSheet) throw new Error("Invalid Google Sheet");
+    const isValid = await validateGoogleSheetId(config.id);
+    if (!isValid) throw new Error("Invalid Sheet ID");
 
     const rows = await fetchSheetData(config);
     const parsed = convertRowsToObjects(rows);
