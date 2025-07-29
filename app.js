@@ -1,3 +1,8 @@
+const CLIENT_ID = "515935803707-v7qshp425m1b4h5ru6jcmmmu99qbikgq.apps.googleusercontent.com";
+// const DEVELOPER_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw";
+// const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
+
+let accessToken = "";
 const sheetIndex = {
   "California/Elk Grove/USA": {
     id: "1D-er6wHw6VJwLl1Vy7GXVi1KekxcAW6lR2-zgcxs4Yg",
