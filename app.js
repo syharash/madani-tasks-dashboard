@@ -7,7 +7,7 @@ let accessToken = "";
 const sheetIndex = {
   "California/Elk Groove/USA": {
     id: "1-YP4QqW4wmfqwgRMXmbEtURiyw2pi3nkYLGbc0sQlT4",
-    range: "Elk-Groove!A7:AM10"
+    range: "Sheet1!A7:AM10"
   },
   "California/Riverside/USA": {
     id: "1iygvJ-hGlaBT23zKlVJksdUcU3xOMtZ10wFvgUa5MnA",
@@ -23,7 +23,7 @@ const sheetIndex = {
   },
   "California/Yuba City/USA": {
     id: "1264Z5C0il28XgXsXf_49wZ4QhcDRD2LGUeb0aOhL7mk",
-    range: "Yuba-City!A7:AM10"
+    range: "YubaCity!A7:AM10"
   },
   "Florida/Miami/USA": {
     id: "1PXMZO1LGWo4TQU2k3D45unvQN7fhZ9GDT6d1ox6tI8Y",
@@ -59,7 +59,7 @@ const sheetIndex = {
   },
   "Maryland/Ellicot City/USA" : {
     id: "1LwhIQaM50PrJfkr4r6U964iwC1pJnq1dP_k0cAEPqKw",
-    range: "Ellicot-City!A7:AM10"
+    range: "EllicotCity!A7:AM10"
   },
   "Maryland/Langhorne/USA" : {
     id: "1zDniVeYL_dTZpvGS18pmklmmVDaCF0WGd3gX4yM9Y8A",
@@ -83,15 +83,15 @@ const sheetIndex = {
   },
   "New York/Valley Stream/USA" : {
     id: "1nTAnMynDiNJ05HhbfWieqz4a7nVgh6iRYD33n02R2og",
-    range: "Valley-Stream!A7:AM10"
+    range: "ValleyStream!A7:AM10"
   },
   "Texas/New Orleans/USA" : {
     id: "1XMJtXTPCGDrtHmoz8xgx_qoeSfylDUDP8l1iTZs9PlI",
-    range: "New-Orleans!A7:AM10"
+    range: "NewOrleans!A7:AM10"
   },
   "Texas/Sugar Land/USA" : {
     id: "1YGC_xaiFWDI31SJhF5oa6gmFTOzktgGtKLpOoh02xIs",
-    range: "Sugar-Land!A7:AM10"
+    range: "SugarLand!A7:AM10"
   },
   "Texas/Wylie/USA" : {
     id: "1JBhROkoHG09HzvaQxCO0WUjtUgHO8m7tySSZlxJFVCE",
@@ -123,7 +123,7 @@ const sheetIndex = {
   },
   "New York/USA" : {
     id: "1znKOsK3qW8sfJGsnkuKGiiuMJ9rvRRTxr4RWjw9kZAw",
-    range: "New-York!A7:AM10"
+    range: "NewYork!A7:AM10"
   },
   "Texas/USA" : {
     id: "1wC4XLsWbAKiciLpIOKU6WeurEjEQpngXdgBI051_Iec",
@@ -141,8 +141,11 @@ const sheetIndex = {
 
 // 🔒 Wrap and encode sheet name + range safely
 function getEncodedRange(rangeStr) {
+  // Only quote if sheet name contains spaces or special characters
   const [sheetName, cellRange] = rangeStr.split("!");
-  return encodeURIComponent(`'${sheetName}'!${cellRange}`);
+  const needsQuote = /[\s\-]/.test(sheetName);
+  const safeSheetName = needsQuote ? `'${sheetName}'` : sheetName;
+  return `${safeSheetName}!${cellRange}`;
 }
 
 // ✅ Optional: check if ID is a valid Sheet
