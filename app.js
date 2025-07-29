@@ -84,7 +84,7 @@ const sheetIndex = {
   "New York/Valley Stream/USA" : {
     id: "1xLlpMA1Lu7aa7fO2PulT9bKoJv6guUep",
     range: "Sheet1!A1:Z100"
-  }
+  },
   "Texas/New Orleans/USA" : {
     id: "1jiWGTOBvtUff45mXUv-7t_6MG0R0povg",
     range: "Sheet1!A1:Z100"
@@ -104,7 +104,7 @@ const sheetIndex = {
   "California/USA" : {
     id: "1Ri6Bpz1DxU8S6mp0_pQzMKLCW2zOpMl5",
     range: "Sheet1!A1:Z100"
-  }
+  },
   "Florida/USA" : {
     id: "1LOy8VxPItttyNo_7vAMbnDDMA_9Mynqg",
     range: "Sheet1!A1:Z100"
