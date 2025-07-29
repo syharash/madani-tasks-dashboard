@@ -7,7 +7,7 @@ let accessToken = "";
 const sheetIndex = {
   "California/Elk Groove/USA": {
     id: "199nKELI9fl5mUEv7JH8RfGa3BY3PXhq1",
-    range: "'Elk Groove-YrWise-2024-2025'!A1:AM10"
+    range: "'Elk-Groove-YrWise-2024-2025'!A1:AM10"
   },
   "California/Riverside/USA": {
     id: "1SEkYpzNmAFDgDHIESHBefadLHrzSD81y",
