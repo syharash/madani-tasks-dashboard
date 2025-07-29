@@ -142,18 +142,14 @@ const sheetIndex = {
 // 🔒 Wrap and encode sheet name + range safely
 function getEncodedRange(rangeStr) {
   const [sheetName, cellRange] = rangeStr.split("!");
-  const quotedSheetName = `'${sheetName}'`; // Safe for hyphens/spaces
-  const fullRange = `${quotedSheetName}!${cellRange}`;
-  return encodeURIComponent(fullRange);
+  return encodeURIComponent(`'${sheetName}'!${cellRange}`);
 }
 
-// ✅ Optional: make sure ID points to a real Sheet
+// ✅ Optional: check if ID is a valid Sheet
 async function validateGoogleSheetId(fileId) {
   const res = await fetch(
     `https://www.googleapis.com/drive/v3/files/${fileId}?fields=mimeType`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    }
+    { headers: { Authorization: `Bearer ${accessToken}` } }
   );
   const data = await res.json();
   return data.mimeType === "application/vnd.google-apps.spreadsheet";
@@ -163,9 +159,7 @@ async function fetchSheetData(config) {
   const encodedRange = getEncodedRange(config.range);
   const res = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${encodedRange}`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    }
+    { headers: { Authorization: `Bearer ${accessToken}` } }
   );
   const data = await res.json();
   return data.values || [];
@@ -174,7 +168,8 @@ async function fetchSheetData(config) {
 document.getElementById("signin-btn").onclick = () => {
   const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
+    scope:
+      "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
     callback: (tokenResponse) => {
       accessToken = tokenResponse.access_token;
       alert("✅ Signed in successfully!");
@@ -204,19 +199,39 @@ document.getElementById("region-select").addEventListener("change", async (e) =>
   }
 });
 
+// 🧠 Auto-detect header row
+function findHeaderRow(rows) {
+  return rows.find(row =>
+    Array.isArray(row) &&
+    row.length > 0 &&
+    row.some(cell => typeof cell === "string" && cell.trim() !== "")
+  );
+}
+
+// 🔄 Convert row data to objects
 function convertRowsToObjects(rows) {
-  const headers = rows[0];
-  return rows.slice(1).map(row => {
-    return headers.reduce((obj, header, i) => {
+  const headerRow = findHeaderRow(rows);
+  if (!headerRow) return [];
+
+  const headerIndex = rows.indexOf(headerRow);
+  return rows.slice(headerIndex + 1).map(row => {
+    return headerRow.reduce((obj, header, i) => {
       obj[header.trim()] = row[i] || "";
       return obj;
     }, {});
   });
 }
 
+// 🖼️ Render dashboard or fallback
 function renderDashboard(data) {
   const container = document.getElementById("dashboard");
   container.innerHTML = "";
+
+  if (!data.length) {
+    container.innerHTML = "<p style='text-align:center;'>📭 No data available for this region.</p>";
+    return;
+  }
+
   data.forEach(entry => {
     const card = document.createElement("div");
     card.className = "region-card";
