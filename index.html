@@ -2,40 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Live Dashboard</title>
-  <script src="https://apis.google.com/js/api.js"></script>
+  <title>Regional Dashboard</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      background: #f9f9f9;
       padding: 20px;
     }
     #region-select {
-      margin-bottom: 20px;
+      margin: 12px 0;
       padding: 8px;
       font-size: 16px;
     }
     .region-card {
-      background: white;
+      background: #fff;
       border: 1px solid #ccc;
-      border-left: 6px solid #0078d7;
+      border-left: 5px solid #0078d7;
+      padding: 14px;
       margin-bottom: 10px;
-      padding: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
   <h2>📊 Regional Dashboard</h2>
-  <label for="region-select">Choose a region:</label>
+  <button id="signin-btn">Sign in with Google</button>
+  <br />
+  <label for="region-select">Choose region:</label>
   <select id="region-select">
     <option value="">-- Select a region --</option>
     <option value="California/Sacramento/USA">Sacramento, CA</option>
     <option value="Texas/Houston/USA">Houston, TX</option>
     <option value="New York/New York/USA">New York, NY</option>
   </select>
-  <div id="dashboard"></div>
 
+  <div id="dashboard"></div>
   <script src="app.js"></script>
 </body>
 </html>
