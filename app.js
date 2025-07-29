@@ -139,10 +139,34 @@ const sheetIndex = {
   }
 };
 
+function formatSheetRange(rangeStr) {
+  return encodeURIComponent(rangeStr);
+}
+
+async function validateGoogleSheetId(fileId, accessToken) {
+  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?fields=mimeType`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  const data = await res.json();
+  return data.mimeType === "application/vnd.google-apps.spreadsheet";
+}
+
+async function fetchSheetData(config) {
+  const encodedRange = formatSheetRange(config.range);
+  const res = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${encodedRange}`,
+    {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }
+  );
+  const data = await res.json();
+  return data.values || [];
+}
+
 document.getElementById("signin-btn").onclick = () => {
   const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+    scope: "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
     callback: (tokenResponse) => {
       accessToken = tokenResponse.access_token;
       alert("✅ Signed in successfully!");
@@ -154,18 +178,15 @@ document.getElementById("signin-btn").onclick = () => {
 document.getElementById("region-select").addEventListener("change", async (e) => {
   const key = e.target.value;
   const config = sheetIndex[key];
+
   if (!accessToken) return alert("⚠️ Please sign in first.");
   if (!config) return alert("⚠️ Region not found.");
 
   try {
-    const res = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${config.range}`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      }
-    );
-    const data = await res.json();
-    const rows = data.values || [];
+    const isValidSheet = await validateGoogleSheetId(config.id, accessToken);
+    if (!isValidSheet) throw new Error("Invalid Sheet ID");
+
+    const rows = await fetchSheetData(config);
     const parsed = convertRowsToObjects(rows);
     renderDashboard(parsed);
   } catch (err) {
