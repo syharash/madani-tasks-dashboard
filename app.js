@@ -2,51 +2,60 @@ const CLIENT_ID = "515935803707-v7qshp425m1b4h5ru6jc0HrEZbgAhkF7zRGU1Nw.apps.goo
 const DEVELOPER_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw";
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
+let accessToken = "";
+
 const sheetIndex = {
   "California/Sacramento/USA": {
-    id: "1ABCxyzSacSheetID", // replace with actual ID
+    id: "YOUR_SHEET_ID_1",
     range: "Sheet1!A1:Z100"
   },
   "Texas/Houston/USA": {
-    id: "1DEFxyzHouSheetID",
+    id: "YOUR_SHEET_ID_2",
     range: "Sheet1!A1:Z100"
   },
   "New York/New York/USA": {
-    id: "1XYZnycSheetID",
+    id: "YOUR_SHEET_ID_3",
     range: "Sheet1!A1:Z100"
   }
 };
 
-function initApiClient() {
-  gapi.load('client:auth2', () => {
-    gapi.client.init({
-      apiKey: DEVELOPER_KEY,
-      clientId: CLIENT_ID,
-      discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-      scope: SCOPES
-    }).then(() => {
-      gapi.auth2.getAuthInstance().signIn();
-    });
+document.getElementById("signin-btn").onclick = () => {
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: 'https://www.googleapis.com/auth/spreadsheets.readonly',
+    callback: (tokenResponse) => {
+      accessToken = tokenResponse.access_token;
+      alert("✅ Signed in successfully!");
+    }
   });
-}
+  tokenClient.requestAccessToken();
+};
 
-async function fetchSheetData(sheetId, range) {
+document.getElementById("region-select").addEventListener("change", async (e) => {
+  const key = e.target.value;
+  const config = sheetIndex[key];
+  if (!accessToken) return alert("⚠️ Please sign in first.");
+  if (!config) return alert("⚠️ Region not found.");
+
   try {
-    const res = await gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: sheetId,
-      range
-    });
-    const rows = res.result.values;
-    const data = convertRowsToObjects(rows);
-    renderDashboard(data);
+    const res = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${config.range}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      }
+    );
+    const data = await res.json();
+    const rows = data.values || [];
+    const parsed = convertRowsToObjects(rows);
+    renderDashboard(parsed);
   } catch (err) {
-    console.error("Error fetching sheet:", err);
-    document.getElementById("dashboard").innerHTML = `<p style="color:red;">Failed to load data.</p>`;
+    console.error("Sheet fetch failed:", err);
+    document.getElementById("dashboard").innerHTML =
+      "<p style='color:red;'>❌ Failed to load sheet data.</p>";
   }
-}
+});
 
 function convertRowsToObjects(rows) {
-  if (!rows.length) return [];
   const headers = rows[0];
   return rows.slice(1).map(row => {
     return headers.reduce((obj, header, i) => {
@@ -63,18 +72,10 @@ function renderDashboard(data) {
     const card = document.createElement("div");
     card.className = "region-card";
     card.innerHTML = `
-      <h3>${entry.Region || "Unnamed Region"}</h3>
-      <p><strong>Metric A:</strong> ${entry.MetricA || "N/A"}</p>
-      <p><strong>Metric B:</strong> ${entry.MetricB || "N/A"}</p>
+      <h3>${entry.City || entry.Region || "Unnamed"}</h3>
+      <p><strong>${entry["2024 Avg"] ? "2024:" : ""}</strong> ${entry["2024 Avg"] || "—"}</p>
+      <p><strong>${entry["2025 Avg"] ? "2025:" : ""}</strong> ${entry["2025 Avg"] || "—"}</p>
     `;
     container.appendChild(card);
   });
 }
-
-document.getElementById("region-select").addEventListener("change", (e) => {
-  const key = e.target.value;
-  const config = sheetIndex[key];
-  if (config) fetchSheetData(config.id, config.range);
-});
-
-window.onload = initApiClient;
