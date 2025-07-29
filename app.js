@@ -139,22 +139,29 @@ const sheetIndex = {
   }
 };
 
-function formatSheetRange(rangeStr) {
-  return encodeURIComponent(rangeStr);
+// 👇 Safely wraps sheet name in single quotes and encodes
+function getEncodedRange(rangeStr) {
+  const [sheetName, cellRange] = rangeStr.split("!");
+  const quotedSheet = `'${sheetName}'`;
+  return encodeURIComponent(`${quotedSheet}!${cellRange}`);
 }
 
-async function validateGoogleSheetId(fileId, accessToken) {
-  const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?fields=mimeType`, {
-    headers: { Authorization: `Bearer ${accessToken}` }
-  });
+// ✅ Optional: Validates that file is a Google Sheet
+async function validateGoogleSheetId(fileId) {
+  const res = await fetch(
+    `https://www.googleapis.com/drive/v3/files/${fileId}?fields=mimeType`,
+    {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }
+  );
   const data = await res.json();
   return data.mimeType === "application/vnd.google-apps.spreadsheet";
 }
 
 async function fetchSheetData(config) {
-  const encodedRange = formatSheetRange(config.range);
+  const safeRange = getEncodedRange(config.range);
   const res = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${encodedRange}`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${safeRange}`,
     {
       headers: { Authorization: `Bearer ${accessToken}` }
     }
@@ -163,6 +170,7 @@ async function fetchSheetData(config) {
   return data.values || [];
 }
 
+// 🧠 Token handling
 document.getElementById("signin-btn").onclick = () => {
   const tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
@@ -175,6 +183,7 @@ document.getElementById("signin-btn").onclick = () => {
   tokenClient.requestAccessToken();
 };
 
+// 🎯 Region select logic
 document.getElementById("region-select").addEventListener("change", async (e) => {
   const key = e.target.value;
   const config = sheetIndex[key];
@@ -183,8 +192,8 @@ document.getElementById("region-select").addEventListener("change", async (e) =>
   if (!config) return alert("⚠️ Region not found.");
 
   try {
-    const isValidSheet = await validateGoogleSheetId(config.id, accessToken);
-    if (!isValidSheet) throw new Error("Invalid Sheet ID");
+    const isValidSheet = await validateGoogleSheetId(config.id);
+    if (!isValidSheet) throw new Error("Invalid Google Sheet");
 
     const rows = await fetchSheetData(config);
     const parsed = convertRowsToObjects(rows);
