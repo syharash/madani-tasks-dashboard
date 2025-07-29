@@ -1,84 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Dynamic Metrics Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://accounts.google.com https://apis.google.com https://www.gstatic.com;"> 
-    
-    <!-- Styling -->
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 2rem;
-        background: #f5f5f5;
-      }
-      h1 {
-        font-size: 1.5rem;
-      }
-      select,
-      button {
-        margin-right: 1rem;
-        margin-bottom: 1rem;
-        padding: 0.5rem;
-        font-size: 1rem;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-        background: #fff;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 0.5rem;
-        text-align: left;
-      }
-      th {
-        background-color: #f0f0f0;
-      }
-      .positive {
-        color: green;
-      }
-      .negative {
-        color: red;
-      }
-      .neutral {
-        color: gray;
-      }
-    </style>
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Dashboard</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    #region-select {
+      margin-bottom: 20px;
+      padding: 8px;
+      font-size: 16px;
+    }
+    .region-card {
+      background: white;
+      border: 1px solid #ccc;
+      border-left: 6px solid #0078d7;
+      margin-bottom: 10px;
+      padding: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>📊 Regional Dashboard</h2>
+  <label for="region-select">Choose a region:</label>
+  <select id="region-select">
+    <option value="">-- Select a region --</option>
+    <option value="California/Sacramento/USA">Sacramento, CA</option>
+    <option value="Texas/Houston/USA">Houston, TX</option>
+    <option value="New York/New York/USA">New York, NY</option>
+  </select>
+  <div id="dashboard"></div>
 
-    <!-- Google APIs -->
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://apis.google.com/js/client.js"></script>
-    <script src="https://apis.google.com/js/platform.js"></script>
-    <script src="https://www.gstatic.com/picker/1.0.0/picker.js"></script>
-  </head>
-  <body>
-    <h1>📊 Live Metrics Dashboard</h1>
-
-    <button onclick="openPicker()">Choose Google Sheet</button>
-
-    <label for="regionType">Region Type:</label>
-    <select id="regionType" disabled></select>
-
-    <label for="regionName">Region Name:</label>
-    <select id="regionName" disabled></select>
-
-    <table id="metrics-table">
-      <thead>
-        <tr>
-          <th>Label</th>
-          <th>2024</th>
-          <th>2025</th>
-          <th>Difference</th>
-          <th>% Change</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <script src="./main.js"></script>
-  </body>
+  <script src="app.js"></script>
+</body>
 </html>
