@@ -156,9 +156,9 @@ async function validateGoogleSheetId(fileId) {
 }
 
 async function fetchSheetData(config) {
-  const encodedRange = getEncodedRange(config.range);
+  const rawRange = `'${config.range.split("!")[0]}'!${config.range.split("!")[1]}`; // wrap only sheet name
   const res = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${encodedRange}`,
+    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${rawRange}`,
     { headers: { Authorization: `Bearer ${accessToken}` } }
   );
   const data = await res.json();
