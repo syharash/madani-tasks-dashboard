@@ -7,11 +7,11 @@ let accessToken = "";
 const sheetIndex = {
   "California/Elk Groove/USA": {
     id: "1-YP4QqW4wmfqwgRMXmbEtURiyw2pi3nkYLGbc0sQlT4",
-    range: "Sheet1!A7:AM10"
+    range: "Sheet1!A8:AM10"
   },
   "California/Riverside/USA": {
     id: "1iygvJ-hGlaBT23zKlVJksdUcU3xOMtZ10wFvgUa5MnA",
-    range: "Riverside!A7:AM10"
+    range: "Riverside!A8:AM10"
   },
   "California/Sacramento/USA": {
     id: "148TnNDI74ZQg5CX4lukFaK_lbVjnG-TaVVJEdN3s_ok",
