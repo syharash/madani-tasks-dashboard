@@ -36,44 +36,54 @@
     opacity: 1;
     transform: translateY(0);
   }
-    #region-select {
-      margin: 12px 0;
-      padding: 8px;
-      font-size: 16px;
-      width: 100%;
-      max-width: 400px;
-    }
-   table {
-    width: auto;
-    table-layout: auto;
-    margin-top: 1rem;
-    background: #fff;
-    border-collapse: collapse;
-  }
-   th, td {
-    border: 1px solid #ccc;
-    padding: 4px 8px;
-    text-align: left;
-    white-space: nowrap;
-  }
-  th:first-child,
-  td:first-child {
-    min-width: 240px;
-    max-width: 450px;
-    white-space: nowrap;
-    overflow-wrap: normal;
+  .selector-group {
     overflow: hidden;
-    text-overflow: ellipsis;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    max-height: 200px; /* You can tweak this as needed */
+    opacity: 1;
   }
-    #tableContainer {
-      margin-top: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-   }
-    .diff-cell {
+.selector-group.hidden {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  }
+ #region-select {
+  margin: 12px 0;
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  }
+table {
+  width: auto;
+  table-layout: auto;
+  margin-top: 1rem;
+  background: #fff;
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+th:first-child,
+td:first-child {
+  min-width: 240px;
+  max-width: 450px;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#tableContainer {
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.diff-cell {
   white-space: nowrap;
   padding: 4px 8px;
 }
-
 .bar-cell {
   position: relative;
   height: 1.2em;
@@ -105,22 +115,25 @@
 
  <div class="selector-group">
     <label for="country-select">Country:</label>
-    <select id="country-select">
+ <select id="country-select">
       <option value="">-- Choose a country --</option>
-    </select>
+ </select>
 
-    <label for="state-select">State:</label>
-    <select id="state-select" disabled>
-      <option value="">-- Choose a state --</option>
-    </select>
+ <label for="state-select">State:</label>
+ <select id="state-select" disabled>
+   <option value="">-- Choose a state --</option>
+ </select>
 
-    <label for="city-input">City:</label>
+ <label for="city-input">City:</label>
     <input list="city-options" id="city-input" placeholder="Start typing a city..." disabled />
     <datalist id="city-options"></datalist>
     <p id="region-note" class="input-note"></p>
-  </div>
-  <div id="tableContainer"></div>
+</div>
+    <div id="tableContainer">
+</div>
+  
 <script src="https://accounts.google.com/gsi/client" async defer></script>  
 <script src="app.js"></script>
+  
 </body>
 </html>
