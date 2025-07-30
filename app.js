@@ -55,6 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setupSignIn();
   setupRegionDropdowns();
   restorePreviousSelection();
+  setupRegionFilters();
+  bindCityInput();
+  bindClearButton();
 });
 
 // 🔐 Sign-in logic
@@ -225,6 +228,110 @@ function restorePreviousSelection() {
       cityInput.dispatchEvent(new Event("input"));
     }, 300);
   }, 300);
+}
+
+function setupRegionFilters() {
+  const countryDropdown = document.getElementById("countryDropdown");
+  const stateDropdown = document.getElementById("stateDropdown");
+  const cityInput = document.getElementById("city-input");
+
+  // Populate country list
+  const countries = [
+    { code: "USA", name: "United States" },
+    { code: "CAN", name: "Canada" },
+    { code: "MEX", name: "Mexico" },
+    // Add more as needed
+  ];
+  countries.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c.code;
+    opt.textContent = c.name;
+    countryDropdown.appendChild(opt);
+  });
+
+  // Handle Country → State population
+  countryDropdown.addEventListener("change", () => {
+    const selected = countryDropdown.value;
+    const states = getStatesForCountry(selected);
+
+    stateDropdown.innerHTML = "";
+    if (states.length === 0) {
+      stateDropdown.disabled = true;
+      cityInput.disabled = true;
+      return;
+    }
+
+    states.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.code;
+      opt.textContent = s.name;
+      stateDropdown.appendChild(opt);
+    });
+
+    stateDropdown.disabled = false;
+    cityInput.disabled = true;
+    document.getElementById("region-note").textContent = "";
+  });
+
+  // Handle State → City enable
+  stateDropdown.addEventListener("change", () => {
+    cityInput.disabled = false;
+    document.getElementById("region-note").textContent = "Now enter a city to filter results.";
+  });
+}
+
+function getStatesForCountry(code) {
+  switch (code) {
+    case "USA":
+      return [
+        { code: "CA", name: "California" },
+        { code: "NY", name: "New York" },
+        { code: "TX", name: "Texas" },
+        // More states
+      ];
+    case "CAN":
+      return [
+        { code: "ON", name: "Ontario" },
+        { code: "BC", name: "British Columbia" },
+        { code: "QC", name: "Quebec" }
+      ];
+    case "MEX":
+      return [
+        { code: "CMX", name: "Mexico City" },
+        { code: "JAL", name: "Jalisco" },
+        { code: "NL", name: "Nuevo León" }
+      ];
+    default:
+      return [];
+  }
+}
+
+function bindCityInput() {
+  const input = document.getElementById("city-input");
+  const note = document.getElementById("region-note");
+
+  input.addEventListener("input", () => {
+    const value = input.value.trim();
+    if (value.length > 0) {
+      note.style.opacity = 1;
+      note.textContent = `Filtering data for "${value}"…`;
+    } else {
+      note.style.opacity = 0;
+      note.textContent = "";
+    }
+  });
+}
+
+function bindClearButton() {
+  const input = document.getElementById("city-input");
+  const note = document.getElementById("region-note");
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    input.value = "";
+    input.disabled = true;
+    note.style.opacity = 0;
+    note.textContent = "";
+  });
 }
 
 // 📡 Fetch from Sheets
