@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>📊 Regional Dashboard</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    select {
+      margin: 8px 0;
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    button:hover {
+      background-color: #005fa1;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1rem;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 4px 8px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th:first-child,
+    td:first-child {
+      min-width: 240px;
+      max-width: 450px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .diff-cell {
+      white-space: nowrap;
+      padding: 4px 8px;
+    }
+
+    .bar-cell {
+      position: relative;
+      height: 1.2em;
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+    }
+
+    .bar {
+      height: 1em;
+      margin-right: 6px;
+      border-radius: 4px;
+      background-color: #ccc;
+      transition: width 0.3s ease;
+    }
+
+    .bar-label {
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+
+    .bar.positive { background-color: #4caf50; }
+    .bar.negative { background-color: #e53935; }
+    .bar.neutral  { background-color: #9e9e9e; }
+
+    #tableContainer {
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>📍 Regional Dashboard</h2>
+  <button id="signin-btn">Sign in with Google</button>
+
+  <label for="country-select">Country:</label>
+  <select id="country-select">
+    <option value="">-- Select Country --</option>
+  </select>
+
+  <label for="state-select">State:</label>
+  <select id="state-select">
+    <option value="">-- Select State --</option>
+  </select>
+
+  <label for="city-select">City:</label>
+  <select id="city-select">
+    <option value="">-- Select City --</option>
+  </select>
+
+  <div id="tableContainer" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
