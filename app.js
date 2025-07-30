@@ -229,32 +229,42 @@ async function fetchSheetData(config) {
   return data.values || [];
 }
 
-function renderTable(data) {
-  const tableBody = document.getElementById("table-body");
-  tableBody.innerHTML = "";
+function renderTable(rows) {
+  const container = document.getElementById("tableContainer");
+  if (!container || !rows || rows.length === 0) return;
 
-  data.forEach(row => {
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+
+  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference"];
+  const headRow = document.createElement("tr");
+  headers.forEach(header => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+
+  rows.forEach(row => {
     const tr = document.createElement("tr");
+    const [task, avg2024, avg2025] = row;
 
-    const nameTd = document.createElement("td");
-    nameTd.textContent = row.name;
-    tr.appendChild(nameTd);
+    const num2024 = parseFloat(avg2024 || 0);
+    const num2025 = parseFloat(avg2025 || 0);
 
-    const val2024Td = document.createElement("td");
-    val2024Td.textContent = row.val2024;
-    tr.appendChild(val2024Td);
+    // Standard value cells
+    [task, avg2024, avg2025].forEach(cell => {
+      const td = document.createElement("td");
+      td.textContent = cell ?? "";
+      tr.appendChild(td);
+    });
 
-    const val2025Td = document.createElement("td");
-    val2025Td.textContent = row.val2025;
-    tr.appendChild(val2025Td);
-
+    // Bar-enhanced difference cell
     const diffTd = document.createElement("td");
     diffTd.className = "diff-cell";
 
-    const num2024 = parseFloat(row.val2024);
-    const num2025 = parseFloat(row.val2025);
-
-    if (!isNaN(num2024) && num2024 !== 0 && !isNaN(num2025)) {
+    if (num2024 !== 0) {
       const percentChange = ((num2025 - num2024) / num2024) * 100;
       const changeRounded = percentChange.toFixed(2);
       const diffClass =
@@ -275,10 +285,14 @@ function renderTable(data) {
     }
 
     tr.appendChild(diffTd);
-    tableBody.appendChild(tr);
+    tbody.appendChild(tr);
   });
-}
 
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  container.innerHTML = "";
+  container.appendChild(table);
+}
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
