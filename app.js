@@ -215,7 +215,7 @@ function setupRegionDropdowns() {
       "Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
       "New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
       "Texas": ["New Orleans", "Sugar Land", "Wylie"],
-      "Washington": ["Lynwood"]
+      "Washington": ["Lynwood"],
       "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"]
       "USA": ["USA"]
     }
