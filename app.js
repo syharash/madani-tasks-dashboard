@@ -194,18 +194,16 @@ document.getElementById("signin-btn").onclick = () => {
   tokenClient.requestAccessToken();
 };
 
-async function fetchSheetData() {
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Sheets API error ${response.status}`);
-    const data = await response.json();
-    renderTable(data.values);
-  } catch (err) {
-    console.error("Error fetching sheet data:", err);
-    showError("Could not load data. Check credentials and sheet visibility.");
-  }
+async function fetchSheetData(config) {
+  const rawRange = `'${config.range.split("!")[0]}'!${config.range.split("!")[1]}`; // wrap only sheet name
+  const res = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${rawRange}`,
+    { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+  const data = await res.json();
+  return data.values || [];
 }
+
 
 function renderTable(rows) {
   const container = document.getElementById("tableContainer");
@@ -215,7 +213,7 @@ function renderTable(rows) {
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
-  const headers = ["Madani Task", "2024 Avg", "2025 Avg", "Difference"];
+  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference between 2024 and 2025"];
   const headRow = document.createElement("tr");
   headers.forEach(header => {
     const th = document.createElement("th");
