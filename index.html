@@ -40,6 +40,28 @@
   width: 100%;
   max-width: 400px;
   }
+.city-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#city-input {
+  flex: 1;
+  padding: 6px;
+}
+
+#clearBtn {
+  padding: 6px 8px;
+  font-size: 16px;
+  background: #eee;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+#clearBtn:hover {
+  background: #ddd;
+}    
 table {
   width: auto;
   table-layout: auto;
@@ -110,9 +132,12 @@ td:first-child {
    <option value="">-- Choose a state --</option>
  </select>
 
- <label for="city-input">City:</label>
-    <input list="city-options" id="city-input" placeholder="Start typing a city..." disabled />
-    <datalist id="city-options"></datalist>
+<label for="city-input">City:</label>
+<div class="city-input-wrap">
+  <input list="city-options" id="city-input" placeholder="Start typing a city..." disabled />
+  <button id="clearBtn" title="Clear selection">❌</button>
+</div>
+<datalist id="city-options"></datalist>
     <p id="region-note" class="input-note"></p>
 </div>
     <div id="tableContainer">
