@@ -7,179 +7,48 @@ let accessToken = "";
 
 
 const sheetIndex = {
-  "USA/California/Elk Grove": {
-    id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4",
-    range: "Sheet1!A1:D41"
-  },
-  "USA/California/Riverside": {
-    id: "17dNm5PDmomzXkRooiQbOe-GEivFCM-mbRnbKjcLIpeU",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/California/Sacramento": {
-    id: "1UBqdC7lbBOlxSSIi3-Cva826jam6B2JbAtNFuWpTbg8",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/California/Woodland": {
-    id: "12zzwPmOSIAUAEyWet1MKfvrqp-4NAHnWWrG5JvnoeNI",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/California/Yuba City": {
-    id: "1YQH5S0lxUr37VwaZBzhOCUjoL6bRJ6lC-nBREkobNF8",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Florida/Miami": {
-    id: "1llr7vVUIZW9QME8RGm4FE-7m267TgYS7Ultw_7QncVI",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Georgia/Lilburn": {
-    id: "15UWcv2eVAyYzvedfg4EfhmRjyuoppd2b-j6PjvPAPn4",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Illinois/Bloomington": {
-    id: "17nhZd9fMoxtaDLRVMIHqI8caskFc40XjQciC7F1vFpE",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Illinois/Chicago": {
-    id: "13E1CISmTfkGL73ASN5J0TaOSclo0SbZLRPZqQw-8W_k",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Illinois/Lombard": {
-    id: "1OIUTzrD2_DY8l1I5QzbOkmtLQZfJGrNJL9zzG4ks7zI",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Illinois/Schaumburg": {
-    id: "1WB49Iv0EXyQGjz9oYMrD2usbRMTgJjV5t9iBui5wdT8",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Illinois/Skokie" : {
-    id: "1ea8qSaisxImAkng3tTKa-U0ETXm9WsC4cJ5w42UslZo",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Maryland/Baltimore" : {
-    id: "1D-er6wHw6VJwLl1Vy7GXVi1KekxcAW6lR2-zgcxs4Yg",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Maryland/Ellicot City" : {
-    id: "1nVQpqXs6yMuZgVwbyZJXblx4Yye7nMABcBAXIK8z9KI",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Maryland/Langhorne" : {
-    id: "1LGrmCa-XaKWekiGMQiKDdGdyiH5Z75ozpR03pFjjSdc",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Maryland/Woodbridge" : {
-    id: "1it9kwrkmtllzSi7fwRD1kt4g__gYHDu8epFY3rtvZME",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/New York/Bronx" : {
-    id: "1_FPyNfoRvDuU_-V3snv1_lu4LY7VWgKG5Ai-ifFDneQ",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/New York/Brooklyn" : {
-    id: "1XZKeCe7TiSltyYBOvVZOiNrQ9vQByjjpSexh5NhITtY",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/New York/Queens" : {
-    id: "1J8DSpXU5VtyRvIqiSLbMYlfZAAChM4Kt89wsQwBMpAk",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/New York/Valley Stream" : {
-    id: "1t2QkPU66O9VxdLG9cvy0U0LJyfaxJ56SSrP5ItOsPc8",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Texas/New Orleans" : {
-    id: "1vU1LFaUqW0m1slHKVIAdCUT1zgLiwLAJ072w-I3zJM4",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Texas/Sugar Land" : {
-    id: "1eTZ6yseR7zaqbVRQK82NaFA5qxGzhtQHkUo-3WgMYFk",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Texas/Wylie" : {
-    id: "1KjioDwq3G28fx59fTCBMP8uZ8yeLWnAsMq8ZCwbQ8ws",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/Washington/Lynwood" : {
-    id: "1bMMaZrx7JtNyu2Gymvw9GTrwKBzsV_ORw9hyrrpvw9Y",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/California" : {
-    id: "1RlMjNlQ6MGuD2Ys2tTtCLQwdvPffs2SknqsoVOmZTdo",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/Florida" : {
-    id: "1Ou5Z159QAkXIoL5HeHeNd8MiKaXiO7ihL5crHawd53g",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/Georgia" : {
-    id: "1wpmACw4kp3-TkCSpLcEKluiyPEggaoh7Nx5IE5Trank",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/Illinois" : {
-    id: "1zAlkC-PJVtAzhBTI7iIVwuLwxB8fDa_Q4wBuzDSiu6g",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/Maryland" : {
-    id: "1WN1DdDte__4SqTJrOaAHQZihp_OkIncO_Od3_ENm8C8",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/New York" : {
-    id: "1-UwhJEWsq4XrWcgH_6TBDTEVzMjNFB6wsA_RKuWcr_A",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/Texas" : {
-    id: "1iP72PvYvGBZ9J-gNEItweKLY85f_gI-4tzI8ojAMiKg",
-    range: "Sheet1!A5:D41"
-  },
-  "USA/States/Washington" : {
-    id: "1FyvZMhrpWSBcwc7qtMloChB6r9aYcuHSL7IarS-4ZGw",
-    range: "Sheet1!A5:D41"
-  },
-  "USA" : {
-    id: "1elFQ7EojnR-7mfbG430HU83zP-q62TIgKAWiNo9zo9s",
-    range: "Sheet1!A5:D41"
-  }
+  "USA/California/Elk Grove": {id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4", range: "Sheet1!A1:D41"},
+  "USA/California/Riverside": {d: "17dNm5PDmomzXkRooiQbOe-GEivFCM-mbRnbKjcLIpeU", range: "Sheet1!A5:D41"},
+  "USA/California/Sacramento": {id: "1UBqdC7lbBOlxSSIi3-Cva826jam6B2JbAtNFuWpTbg8", range: "Sheet1!A5:D41"},
+  "USA/California/Woodland": {id: "12zzwPmOSIAUAEyWet1MKfvrqp-4NAHnWWrG5JvnoeNI", range: "Sheet1!A5:D41"},
+  "USA/California/Yuba City": {id: "1YQH5S0lxUr37VwaZBzhOCUjoL6bRJ6lC-nBREkobNF8", range: "Sheet1!A5:D41"},
+  "USA/Florida/Miami": {id: "1llr7vVUIZW9QME8RGm4FE-7m267TgYS7Ultw_7QncVI", range: "Sheet1!A5:D41"},
+  "USA/Georgia/Lilburn": {id: "15UWcv2eVAyYzvedfg4EfhmRjyuoppd2b-j6PjvPAPn4", range: "Sheet1!A5:D41"},
+  "USA/Illinois/Bloomington": {id: "17nhZd9fMoxtaDLRVMIHqI8caskFc40XjQciC7F1vFpE", range: "Sheet1!A5:D41"},
+  "USA/Illinois/Chicago": {id: "13E1CISmTfkGL73ASN5J0TaOSclo0SbZLRPZqQw-8W_k", range: "Sheet1!A5:D41"},
+  "USA/Illinois/Lombard": {id: "1OIUTzrD2_DY8l1I5QzbOkmtLQZfJGrNJL9zzG4ks7zI", range: "Sheet1!A5:D41"},
+  "USA/Illinois/Schaumburg": {id: "1WB49Iv0EXyQGjz9oYMrD2usbRMTgJjV5t9iBui5wdT8", range: "Sheet1!A5:D41"},
+  "USA/Illinois/Skokie" : {id: "1ea8qSaisxImAkng3tTKa-U0ETXm9WsC4cJ5w42UslZo", range: "Sheet1!A5:D41"},
+  "USA/Maryland/Baltimore" : {id: "1D-er6wHw6VJwLl1Vy7GXVi1KekxcAW6lR2-zgcxs4Yg", range: "Sheet1!A5:D41"},
+  "USA/Maryland/Ellicot City" : {id: "1nVQpqXs6yMuZgVwbyZJXblx4Yye7nMABcBAXIK8z9KI", range: "Sheet1!A5:D41"},
+  "USA/Maryland/Langhorne" : {id: "1LGrmCa-XaKWekiGMQiKDdGdyiH5Z75ozpR03pFjjSdc", range: "Sheet1!A5:D41"},
+  "USA/Maryland/Woodbridge" : {id: "1it9kwrkmtllzSi7fwRD1kt4g__gYHDu8epFY3rtvZME", range: "Sheet1!A5:D41"},
+  "USA/New York/Bronx" : {id: "1_FPyNfoRvDuU_-V3snv1_lu4LY7VWgKG5Ai-ifFDneQ", range: "Sheet1!A5:D41"},
+  "USA/New York/Brooklyn" : {id: "1XZKeCe7TiSltyYBOvVZOiNrQ9vQByjjpSexh5NhITtY", range: "Sheet1!A5:D41"},
+  "USA/New York/Queens" : {id: "1J8DSpXU5VtyRvIqiSLbMYlfZAAChM4Kt89wsQwBMpAk", range: "Sheet1!A5:D41"},
+  "USA/New York/Valley Stream" : {id: "1t2QkPU66O9VxdLG9cvy0U0LJyfaxJ56SSrP5ItOsPc8", range: "Sheet1!A5:D41"},
+  "USA/Texas/New Orleans" : {id: "1vU1LFaUqW0m1slHKVIAdCUT1zgLiwLAJ072w-I3zJM4", range: "Sheet1!A5:D41"},
+  "USA/Texas/Sugar Land" : {id: "1eTZ6yseR7zaqbVRQK82NaFA5qxGzhtQHkUo-3WgMYFk", range: "Sheet1!A5:D41"},
+  "USA/Texas/Wylie" : {id: "1KjioDwq3G28fx59fTCBMP8uZ8yeLWnAsMq8ZCwbQ8ws", range: "Sheet1!A5:D41"},
+  "USA/Washington/Lynwood" : {id: "1bMMaZrx7JtNyu2Gymvw9GTrwKBzsV_ORw9hyrrpvw9Y", range: "Sheet1!A5:D41"},
+  "USA/States/California" : {id: "1RlMjNlQ6MGuD2Ys2tTtCLQwdvPffs2SknqsoVOmZTdo", range: "Sheet1!A5:D41"},
+  "USA/States/Florida" : {id: "1Ou5Z159QAkXIoL5HeHeNd8MiKaXiO7ihL5crHawd53g", range: "Sheet1!A5:D41"},
+  "USA/States/Georgia" : {id: "1wpmACw4kp3-TkCSpLcEKluiyPEggaoh7Nx5IE5Trank", range: "Sheet1!A5:D41"},
+  "USA/States/Illinois" : {id: "1zAlkC-PJVtAzhBTI7iIVwuLwxB8fDa_Q4wBuzDSiu6g", range: "Sheet1!A5:D41"},
+  "USA/States/Maryland" : {id: "1WN1DdDte__4SqTJrOaAHQZihp_OkIncO_Od3_ENm8C8", range: "Sheet1!A5:D41"},
+  "USA/States/New York" : {id: "1-UwhJEWsq4XrWcgH_6TBDTEVzMjNFB6wsA_RKuWcr_A", range: "Sheet1!A5:D41"},
+  "USA/States/Texas" : {id: "1iP72PvYvGBZ9J-gNEItweKLY85f_gI-4tzI8ojAMiKg", range: "Sheet1!A5:D41"},
+  "USA/States/Washington" : {id: "1FyvZMhrpWSBcwc7qtMloChB6r9aYcuHSL7IarS-4ZGw", range: "Sheet1!A5:D41"},
+  "USA" : {id: "1elFQ7EojnR-7mfbG430HU83zP-q62TIgKAWiNo9zo9s", range: "Sheet1!A5:D41"}
 };
 
-const metricLabels = [
-  "Waking up for Fajr",
-  "Tafseer",
-  "Dars in Masjid",
-  "Home Dars",
-  "Area Dars",
-  "Total Dars",
-  "Madarsa in Home",
-  "Participants in Home",
-  "Madarsa at other places",
-  "Participants at other places",
-  "Total Madaris",
-  "Total Students",
-  "Daily Individual Efforts",
-  "Monthly Individual Efforts",
-  "Ijtema Qty",
-  "Participants in Ijtema",
-  "Participants in Night Etikaf",
-  "Madani Muzakaras",
-  "Madani Muzakara Participants",
-  "How Many Times Area Visit",
-  "Total Participants in Area Visit",
-  "How-many-Times (A Day in the Path of the Almighty)",
-  "How-many-Times (Session in other Languages)",
-  "Total Participants (Session in other Languages)",
-  "Numbers of Readers & Listener of Weekly Booklet",
-  "Pious Booklet Distributed",
-  "Pious Booklet Received",
-  "Qafilah 3 Days Quantity",
-  "Qafilah 3 Days Travellers",
-  "Qafilah 12 Days Quantity",
-  "Qafilah 12 Days Travellers",
-  "Qafilah 1 Month Quantity",
-  "Qafilah 1 Month Travellers",
-  "Total Number Qafilas",
-  "Total Participants Qafilas",
-  "Total Number Madani Courses",
-  "Total Number of Participants",
- ];
+const metricLabels = ["Waking up for Fajr", "Tafseer", "Dars in Masjid", "Home Dars", "Area Dars", "Total Dars", "Madarsa in Home","Participants in Home",
+  "Madarsa at other places", "Participants at other places", "Total Madaris", "Total Students", "Daily Individual Efforts", "Monthly Individual Efforts",
+  "Ijtema Qty", "Participants in Ijtema", "Participants in Night Etikaf", "Madani Muzakaras", "Madani Muzakara Participants", "How Many Times Area Visit",
+  "Total Participants in Area Visit", "How-many-Times (A Day in the Path of the Almighty)", "How-many-Times (Session in other Languages)", "Total Participants (Session in other Languages)",
+  "Numbers of Readers & Listener of Weekly Booklet", "Pious Booklet Distributed", "Pious Booklet Received", "Qafilah 3 Days Quantity", "Qafilah 3 Days Travellers",
+  "Qafilah 12 Days Quantity", "Qafilah 12 Days Travellers", "Qafilah 1 Month Quantity", "Qafilah 1 Month Travellers", "Total Number Qafilas", "Total Participants Qafilas",
+  "Total Number Madani Courses", "Total Number of Participants",];
 
 // 🚀 Initialize after DOM ready
 document.addEventListener("DOMContentLoaded", () => {
