@@ -1,69 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>📊 Regional Dashboard</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <meta charset="UTF-8">
+  <title>Regional Dashboard</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-    }
-
-    h2 {
-      margin-top: 0;
-    }
-
-    select {
-      margin: 8px 0;
-      padding: 8px;
-      font-size: 16px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    button {
-      padding: 8px 16px;
-      font-size: 16px;
-      background-color: #0078d7;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-
-    button:hover {
-      background-color: #005fa1;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 1rem;
-      background: #fff;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 4px 8px;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    th:first-child,
-    td:first-child {
-      min-width: 240px;
-      max-width: 450px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .diff-cell {
-      white-space: nowrap;
-      padding: 4px 8px;
-    }
-
+    /* Bar Visualization Styles */
     .bar-cell {
       position: relative;
       height: 1.2em;
@@ -71,7 +12,6 @@
       display: flex;
       align-items: center;
     }
-
     .bar {
       height: 1em;
       margin-right: 6px;
@@ -79,42 +19,151 @@
       background-color: #ccc;
       transition: width 0.3s ease;
     }
-
     .bar-label {
       font-weight: bold;
       font-size: 0.9em;
     }
-
     .bar.positive { background-color: #4caf50; }
     .bar.negative { background-color: #e53935; }
     .bar.neutral  { background-color: #9e9e9e; }
 
-    #tableContainer {
-      margin-top: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /* Cascading Dropdown Styles */
+    .selector-group {
+      margin: 12px 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    select {
+      padding: 6px;
+      margin-bottom: 8px;
+      min-width: 200px;
     }
   </style>
 </head>
 <body>
+
   <h2>📍 Regional Dashboard</h2>
   <button id="signin-btn">Sign in with Google</button>
 
-  <label for="country-select">Country:</label>
-  <select id="country-select">
-    <option value="">-- Select Country --</option>
-  </select>
+  <!-- Option 1: Grouped Flat Dropdown -->
+  <div class="selector-group">
+    <label for="region-select">Quick Region Picker:</label>
+    <select id="region-select">
+      <option value="">-- Select from grouped dropdown --</option>
 
-  <label for="state-select">State:</label>
-  <select id="state-select">
-    <option value="">-- Select State --</option>
-  </select>
+      <optgroup label="USA / California">
+        <option value="USA/California/Elk Grove">California → Elk Grove</option>
+        <option value="USA/California/Riverside">California → Riverside</option>
+        <option value="USA/California/Sacramento">California → Sacramento</option>
+        <option value="USA/California/Woodland">California → Woodland</option>
+        <option value="USA/California/Yuba City">California → Yuba City</option>
+      </optgroup>
 
-  <label for="city-select">City:</label>
-  <select id="city-select">
-    <option value="">-- Select City --</option>
-  </select>
+      <optgroup label="USA / Illinois">
+        <option value="USA/Illinois/Chicago">Illinois → Chicago</option>
+        <option value="USA/Illinois/Skokie">Illinois → Skokie</option>
+      </optgroup>
 
-  <div id="tableContainer" aria-live="polite"></div>
-  <script src="app.js"></script>
+      <optgroup label="USA / Texas">
+        <option value="USA/Texas/Sugar Land">Texas → Sugar Land</option>
+        <option value="USA/Texas/Wylie">Texas → Wylie</option>
+      </optgroup>
+
+      <optgroup label="USA">
+        <option value="USA">Entire Country</option>
+      </optgroup>
+    </select>
+  </div>
+
+  <!-- Option 2: Cascading Selectors -->
+  <div class="selector-group">
+    <label for="country-select">Country:</label>
+    <select id="country-select">
+      <option value="">-- Choose a country --</option>
+      <option value="USA">USA</option>
+      <option value="Canada">Canada</option>
+    </select>
+
+    <label for="state-select">State:</label>
+    <select id="state-select" disabled></select>
+
+    <label for="city-select">City:</label>
+    <select id="city-select" disabled></select>
+  </div>
+
+  <script>
+    const regionData = {
+      "USA": {
+        "California": ["Sacramento", "Woodland", "Yuba City"],
+        "Illinois": ["Chicago", "Skokie"],
+        "Texas": ["Sugar Land", "Wylie"]
+      },
+      "Canada": {
+        "Ontario": ["Toronto"],
+        "Quebec": ["Montreal"]
+      }
+    };
+
+    const countrySelect = document.getElementById("country-select");
+    const stateSelect = document.getElementById("state-select");
+    const citySelect = document.getElementById("city-select");
+
+    countrySelect.addEventListener("change", () => {
+      const country = countrySelect.value;
+      stateSelect.innerHTML = '<option value="">-- Choose a state --</option>';
+      citySelect.innerHTML = '<option value="">-- Choose a city --</option>';
+      citySelect.disabled = true;
+
+      if (regionData[country]) {
+        stateSelect.disabled = false;
+        Object.keys(regionData[country]).forEach(state => {
+          const opt = new Option(state, state);
+          stateSelect.add(opt);
+        });
+      } else {
+        stateSelect.disabled = true;
+      }
+    });
+
+    stateSelect.addEventListener("change", () => {
+      const country = countrySelect.value;
+      const state = stateSelect.value;
+      citySelect.innerHTML = '<option value="">-- Choose a city --</option>';
+
+      if (regionData[country] && regionData[country][state]) {
+        citySelect.disabled = false;
+        regionData[country][state].forEach(city => {
+          const opt = new Option(city, city);
+          citySelect.add(opt);
+        });
+      } else {
+        citySelect.disabled = true;
+      }
+    });
+
+    citySelect.addEventListener("change", () => {
+      const country = countrySelect.value;
+      const state = stateSelect.value;
+      const city = citySelect.value;
+      const regionKey = `${country}/${state}/${city}`;
+      // Call your fetch function
+      console.log("Selected regionKey:", regionKey);
+      fetchSheetData(sheetIndex[regionKey]);
+    });
+
+    // Flat dropdown (Option 1) logic
+    const regionSelect = document.getElementById("region-select");
+    regionSelect.addEventListener("change", () => {
+      const regionKey = regionSelect.value;
+      if (regionKey) {
+        console.log("Selected regionKey:", regionKey);
+        fetchSheetData(sheetIndex[regionKey]);
+      }
+    });
+  </script>
+<script src="app.js"></script>
 </body>
 </html>
