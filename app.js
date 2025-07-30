@@ -198,6 +198,7 @@ function setupSignIn() {
       callback: (resp) => {
         accessToken = resp.access_token;
         alert("✅ Signed in successfully!");
+        clearError();
       }
     });
     tokenClient.requestAccessToken();
@@ -301,6 +302,7 @@ function setupRegionDropdowns() {
   cityInput.placeholder = showCity ? "Start typing a city..." : labelText;
 });
   cityInput.addEventListener("input", async () => {
+    clearError();
     const country = countrySelect.value;
     const state = stateSelect.value;
     const city = cityInput.value;
@@ -425,4 +427,8 @@ function renderTable(rows) {
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
+}
+function clearError() {
+  const container = document.getElementById("tableContainer");
+  if (container) container.textContent = "";
 }
