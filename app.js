@@ -1,14 +1,27 @@
 const CLIENT_ID = "515935803707-v7qshp425m1b4h5ru6jcmmmu99qbikgq.apps.googleusercontent.com";
 const API_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw"; // Replace with actual API key
 let accessToken = "";
-
+const regionData = {
+  "USA": {
+      "California": ["Elk Grove", "Riverside", "Sacramento", "Woodland", "Yuba City"],
+      "Florida": ["Miami"],
+      "Georgia": ["Lilburn"],
+      "Illinois": ["Bloomington", "Chicago", "Lombard", "Schaumburg", "Skokie"],
+      "Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
+      "New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
+      "Texas": ["New Orleans", "Sugar Land", "Wylie"],
+      "Washington": ["Lynwood"],
+      "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
+      "USA": ["USA"]
+     }
+};
 // const DEVELOPER_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw";
 // const SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
 
 const sheetIndex = {
   "USA/California/Elk Grove": {id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4", range: "Sheet1!A1:D41"},
-  "USA/California/Riverside": {d: "17dNm5PDmomzXkRooiQbOe-GEivFCM-mbRnbKjcLIpeU", range: "Sheet1!A5:D41"},
+  "USA/California/Riverside": {id: "17dNm5PDmomzXkRooiQbOe-GEivFCM-mbRnbKjcLIpeU", range: "Sheet1!A5:D41"},
   "USA/California/Sacramento": {id: "1UBqdC7lbBOlxSSIi3-Cva826jam6B2JbAtNFuWpTbg8", range: "Sheet1!A5:D41"},
   "USA/California/Woodland": {id: "12zzwPmOSIAUAEyWet1MKfvrqp-4NAHnWWrG5JvnoeNI", range: "Sheet1!A5:D41"},
   "USA/California/Yuba City": {id: "1YQH5S0lxUr37VwaZBzhOCUjoL6bRJ6lC-nBREkobNF8", range: "Sheet1!A5:D41"},
@@ -53,7 +66,7 @@ const metricLabels = ["Waking up for Fajr", "Tafseer", "Dars in Masjid", "Home D
 // 🚀 Initialize after DOM ready
 document.addEventListener("DOMContentLoaded", () => {
   setupSignIn();
-  setupRegionDropdowns();
+  //setupRegionDropdowns();
   restorePreviousSelection();
   setupRegionFilters();
   bindCityInput();
@@ -78,21 +91,21 @@ function setupSignIn() {
 }
 
 // 🧭 Region logic
-function setupRegionDropdowns() {
-  const regionData = {
-    "USA": {
-      "California": ["Elk Grove", "Riverside", "Sacramento", "Woodland", "Yuba City"],
-      "Florida": ["Miami"],
-      "Georgia": ["Lilburn"],
-      "Illinois": ["Bloomington", "Chicago", "Lombard", "Schaumburg", "Skokie"],
-      "Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
-      "New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
-      "Texas": ["New Orleans", "Sugar Land", "Wylie"],
-      "Washington": ["Lynwood"],
-      "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
-      "USA": ["USA"]
-    }
-  };
+//function setupRegionDropdowns() {
+//  const regionData = {
+  //  "USA": {
+    //  "California": ["Elk Grove", "Riverside", "Sacramento", "Woodland", "Yuba City"],
+      //"Florida": ["Miami"],
+      //"Georgia": ["Lilburn"],
+      //"Illinois": ["Bloomington", "Chicago", "Lombard", "Schaumburg", "Skokie"],
+      //"Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
+      //"New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
+      //"Texas": ["New Orleans", "Sugar Land", "Wylie"],
+      //"Washington": ["Lynwood"],
+      //"States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
+      //"USA": ["USA"]
+   // }
+  //};
 
   const countrySelect = document.getElementById("country-select");
   const stateSelect = document.getElementById("state-select");
@@ -234,49 +247,49 @@ function setupRegionFilters() {
   const countryDropdown = document.getElementById("countryDropdown");
   const stateDropdown = document.getElementById("stateDropdown");
   const cityInput = document.getElementById("city-input");
+  const cityOptions = document.getElementById("city-options");
 
-  // Populate country list
-  const countries = [
-    { code: "USA", name: "United States" },
-    { code: "CAN", name: "Canada" },
-    { code: "MEX", name: "Mexico" },
-    // Add more as needed
-  ];
-  countries.forEach(c => {
+  Object.keys(regionData).forEach(country => {
     const opt = document.createElement("option");
-    opt.value = c.code;
-    opt.textContent = c.name;
+    opt.value = country;
+    opt.textContent = country;
     countryDropdown.appendChild(opt);
   });
 
-  // Handle Country → State population
   countryDropdown.addEventListener("change", () => {
-    const selected = countryDropdown.value;
-    const states = getStatesForCountry(selected);
+    const selectedCountry = countryDropdown.value;
+    const states = Object.keys(regionData[selectedCountry] || {});
 
-    stateDropdown.innerHTML = "";
-    if (states.length === 0) {
-      stateDropdown.disabled = true;
-      cityInput.disabled = true;
-      return;
-    }
+    stateDropdown.innerHTML = '<option value="">-- Choose a state --</option>';
+    cityInput.disabled = true;
+    cityOptions.innerHTML = "";
+    stateDropdown.disabled = !states.length;
 
-    states.forEach(s => {
+    states.forEach(state => {
       const opt = document.createElement("option");
-      opt.value = s.code;
-      opt.textContent = s.name;
+      opt.value = state;
+      opt.textContent = state;
       stateDropdown.appendChild(opt);
     });
-
-    stateDropdown.disabled = false;
-    cityInput.disabled = true;
-    document.getElementById("region-note").textContent = "";
   });
 
-  // Handle State → City enable
   stateDropdown.addEventListener("change", () => {
-    cityInput.disabled = false;
-    document.getElementById("region-note").textContent = "Now enter a city to filter results.";
+    const selectedCountry = countryDropdown.value;
+    const selectedState = stateDropdown.value;
+    const cities = regionData[selectedCountry]?.[selectedState] || [];
+
+    cityOptions.innerHTML = "";
+    cityInput.disabled = cities.length === 0;
+
+    cities.forEach(city => {
+      const opt = document.createElement("option");
+      opt.value = city;
+      cityOptions.appendChild(opt);
+    });
+
+    document.getElementById("region-note").textContent = cities.length
+      ? `Now enter a city from ${selectedState}.`
+      : `No cities found for ${selectedState}.`;
   });
 }
 
