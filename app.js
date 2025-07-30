@@ -252,13 +252,25 @@ function renderTable(rows) {
 
     const num2024 = parseFloat(avg2024 || 0);
     const num2025 = parseFloat(avg2025 || 0);
-    const diff = (num2025 - num2024).toFixed(2);
+    let diffText = "-";
+    let diffColor = ""; // default color
 
-    [task, avg2024, avg2025, diff].forEach(cell => {
+    if (num2024 !== 0) {
+      const percentChange = ((num2025 - num2024) / num2024) * 100;
+      diffText = percentChange.toFixed(2) + "%";
+      diffColor = percentChange > 0 ? "green" : percentChange < 0 ? "red" : "black";
+    }
+
+    [task, avg2024, avg2025].forEach(cell => {
       const td = document.createElement("td");
       td.textContent = cell ?? "";
       tr.appendChild(td);
     });
+
+    const diffTd = document.createElement("td");
+    diffTd.textContent = diffText;
+    diffTd.style.color = diffColor;
+    tr.appendChild(diffTd);
 
     tbody.appendChild(tr);
   });
