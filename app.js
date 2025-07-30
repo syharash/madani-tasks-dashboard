@@ -7,7 +7,7 @@ let accessToken = "";
 
 
 const sheetIndex = {
-  "USA/California/Elk Groove": {
+  "USA/California/Elk Grove": {
     id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4",
     range: "Sheet1!A1:D41"
   },
@@ -91,15 +91,15 @@ const sheetIndex = {
     id: "1vU1LFaUqW0m1slHKVIAdCUT1zgLiwLAJ072w-I3zJM4",
     range: "Sheet1!A5:D41"
   },
-  "USA/Texas/Sugar Land/USA" : {
+  "USA/Texas/Sugar Land" : {
     id: "1eTZ6yseR7zaqbVRQK82NaFA5qxGzhtQHkUo-3WgMYFk",
     range: "Sheet1!A5:D41"
   },
-  "USA/Texas/Wylie/USA" : {
+  "USA/Texas/Wylie" : {
     id: "1KjioDwq3G28fx59fTCBMP8uZ8yeLWnAsMq8ZCwbQ8ws",
     range: "Sheet1!A5:D41"
   },
-  "USA/Washington/Lynwood/USA" : {
+  "USA/Washington/Lynwood" : {
     id: "1bMMaZrx7JtNyu2Gymvw9GTrwKBzsV_ORw9hyrrpvw9Y",
     range: "Sheet1!A5:D41"
   },
@@ -111,7 +111,7 @@ const sheetIndex = {
     id: "1Ou5Z159QAkXIoL5HeHeNd8MiKaXiO7ihL5crHawd53g",
     range: "Sheet1!A5:D41"
   },
-  "USA/Sates/Georgia" : {
+  "USA/States/Georgia" : {
     id: "1wpmACw4kp3-TkCSpLcEKluiyPEggaoh7Nx5IE5Trank",
     range: "Sheet1!A5:D41"
   },
@@ -135,7 +135,7 @@ const sheetIndex = {
     id: "1FyvZMhrpWSBcwc7qtMloChB6r9aYcuHSL7IarS-4ZGw",
     range: "Sheet1!A5:D41"
   },
-  "USA/USA" : {
+  "USA" : {
     id: "1elFQ7EojnR-7mfbG430HU83zP-q62TIgKAWiNo9zo9s",
     range: "Sheet1!A5:D41"
   }
