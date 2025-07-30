@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   restorePreviousSelection();
 });
 
-// 🔐 Google OAuth Setup
+// 🔐 Sign-in logic
 function setupSignIn() {
   const btn = document.getElementById("signin-btn");
   btn.onclick = () => {
@@ -74,7 +74,7 @@ function setupSignIn() {
   };
 }
 
-// 🧭 Region Data and Dropdown Initialization
+// 🧭 Region logic
 function setupRegionDropdowns() {
   const regionData = {
     "USA": {
@@ -96,7 +96,6 @@ function setupRegionDropdowns() {
   const cityInput = document.getElementById("city-input");
   const cityOptions = document.getElementById("city-options");
 
-  // 🔽 Populate countries
   Object.keys(regionData).forEach(country => {
     countrySelect.add(new Option(country, country));
   });
@@ -115,61 +114,28 @@ function setupRegionDropdowns() {
     }
   });
 
- stateSelect.addEventListener("change", () => {
-  const country = countrySelect.value;
-  const state = stateSelect.value;
-  const cities = regionData[country]?.[state] || [];
+  stateSelect.addEventListener("change", () => {
+    const country = countrySelect.value;
+    const state = stateSelect.value;
+    const cities = regionData[country]?.[state] || [];
 
-  // 🔁 Update city options
-  cityInput.value = "";
-  cityOptions.innerHTML = "";
-  cities.forEach(city => {
-    const opt = document.createElement("option");
-    opt.value = city;
-    cityOptions.appendChild(opt);
+    let labelText = "City:";
+    let placeholderText = "Start typing a city...";
+    let showCity = true;
+
+    if (state === "USA") {
+      labelText = "Country:";
+      placeholderText = "Select a country...";
+      showCity = false;
+    } else if (state === "States") {
+      labelText = "State:";
+      placeholderText = "Select a state...";
+      showCity = false;
+    }
+
+    setLocationContext(labelText, placeholderText, cities, showCity);
   });
 
-  // 🌎 Tailored label and note logic
-  const regionLabel = document.querySelector('label[for="city-input"]');
-  const regionNote = document.getElementById("region-note");
-  const cityInputGroup = cityInput.closest('.selector-group') || cityInput;
-
-  let labelText = "City:";
-  let noteText = "";
-  let showCity = true;
-
-  if (state === "USA") {
-    labelText = "Country:";
-    noteText = "Select the country for Country Summary Metrics.";
-    showCity = false;
-  } else if (state === "States") {
-    labelText = "State:";
-    noteText = "Select a state for summary metrics.";
-    showCity = false;
-  }
-
-  // 🖋 Apply dynamic guidance
-  if (regionLabel) regionLabel.textContent = labelText;
-  if (regionNote) regionNote.textContent = noteText;
-
- // ✨ Trigger animated fade-in
-  regionNote.classList.remove("visible"); // reset
-  void regionNote.offsetWidth; // force reflow to restart animation
-  regionNote.classList.add("visible");
-   
-// 👀 Show/hide city input
-  if (cityInputGroup) cityInputGroup.classList.toggle("hidden", !showCity);
-  cityInput.disabled = !showCity;
-
-  // 🧼 Cleanup if city input is hidden
-  if (!showCity) {
-    cityInput.value = "";
-    cityOptions.innerHTML = "";
-  }
-
-  // 🧭 Placeholder tuning
-  cityInput.placeholder = showCity ? "Start typing a city..." : labelText;
-});
   cityInput.addEventListener("input", async () => {
     clearError();
     const country = countrySelect.value;
@@ -199,7 +165,45 @@ function setupRegionDropdowns() {
   });
 }
 
-// 💾 Restore previous selection from storage
+// 🧩 Modular location handler
+function setLocationContext(labelText, placeholderText, options = [], enableInput = true) {
+  const label = document.querySelector('label[for="city-input"]');
+  const input = document.getElementById("city-input");
+  const datalist = document.getElementById("city-options");
+  const regionNote = document.getElementById("region-note");
+  const clearBtn = document.getElementById("clearBtn");
+  const cityInputGroup = input.closest('.selector-group') || input;
+
+  if (label) label.textContent = labelText;
+  input.placeholder = placeholderText;
+  input.value = "";
+  datalist.innerHTML = "";
+  input.disabled = !enableInput;
+
+  options.forEach(opt => {
+    const el = document.createElement("option");
+    el.value = opt;
+    datalist.appendChild(el);
+  });
+
+  const guidance = {
+    "Country:": "Select the country for Country Summary Metrics.",
+    "State:": "Select a state for summary metrics.",
+    "City:": ""
+  };
+
+  if (regionNote) {
+    regionNote.textContent = guidance[labelText] || "";
+    regionNote.classList.remove("visible");
+    void regionNote.offsetWidth;
+    regionNote.classList.add("visible");
+  }
+
+  if (cityInputGroup) cityInputGroup.classList.toggle("hidden", !enableInput);
+  if (clearBtn) clearBtn.style.display = enableInput ? "inline-block" : "none";
+}
+
+// 💾 Restore previous selection
 function restorePreviousSelection() {
   const savedKey = localStorage.getItem("regionKey");
   if (!savedKey) return;
@@ -223,7 +227,7 @@ function restorePreviousSelection() {
   }, 300);
 }
 
-// 📡 Fetch from Google Sheets API
+// 📡 Fetch from Sheets
 async function fetchSheetData(config) {
   const [sheetName, rangePart] = config.range.split("!");
   const range = `'${sheetName}'!${rangePart}`;
@@ -234,7 +238,7 @@ async function fetchSheetData(config) {
   return data.values || [];
 }
 
-// 📊 Render the table
+// 📊 Table renderer
 function renderTable(rows) {
   const container = document.getElementById("tableContainer");
   if (!container || !rows || rows.length === 0) return;
@@ -293,17 +297,17 @@ function renderTable(rows) {
   container.innerHTML = "";
   container.appendChild(table);
 }
-
-// ❗ Error handler
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
+
   const status = document.getElementById("statusBanner");
   if (status) {
     status.textContent = msg;
     status.classList.add("error");
   }
 }
+
 function clearError() {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = "";
