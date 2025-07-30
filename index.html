@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Regional Dashboard</title>
+  <title>📊 Regional Dashboard</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     body {
@@ -10,25 +10,52 @@
       background: #f9f9f9;
       padding: 20px;
     }
+    h2 {
+      margin-top: 0;
+    }
+    #signin-btn {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    #signin-btn:hover {
+      background-color: #005fa1;
+    }
     #region-select {
       margin: 12px 0;
       padding: 8px;
       font-size: 16px;
+      width: 100%;
+      max-width: 400px;
     }
-    .region-card {
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1rem;
       background: #fff;
+    }
+    th, td {
       border: 1px solid #ccc;
-      border-left: 5px solid #0078d7;
-      padding: 14px;
-      margin-bottom: 10px;
+      padding: 0.5em;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    #tableContainer {
+      margin-top: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-  <h2>📊 Regional Dashboard</h2>
+  <h2>📍 Regional Dashboard</h2>
   <button id="signin-btn">Sign in with Google</button>
-  <br />
+
   <label for="region-select">Choose region:</label>
   <select id="region-select">
     <option value="">-- Select a City, State or Country --</option>
@@ -41,7 +68,7 @@
     <option value="Illinois/Bloomington/USA">Bloomington, IL</option>
     <option value="Illinois/Chicago/USA">Chicago, IL</option>
     <option value="Illinois/Lombard/USA">Lombard, IL</option>
-    <option value="Illinois/Schaumburg/USA">Schaumburg, CA</option>
+    <option value="Illinois/Schaumburg/USA">Schaumburg, IL</option>
     <option value="Illinois/Skokie/USA">Skokie, IL</option>
     <option value="Maryland/Baltimore/USA">Baltimore, MD</option>
     <option value="Maryland/Ellicot City/USA">Ellicot City, MD</option>
@@ -66,7 +93,7 @@
     <option value="USA">USA</option>
   </select>
 
-  <div id="dashboard"></div>
+  <div id="tableContainer" aria-live="polite"></div>
   <script src="app.js"></script>
 </body>
 </html>
