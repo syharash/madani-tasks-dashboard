@@ -1,4 +1,3 @@
-
 const CLIENT_ID = "515935803707-v7qshp425m1b4h5ru6jcmmmu99qbikgq.apps.googleusercontent.com";
 const API_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw"; // Replace with actual API key
 let accessToken = "";
@@ -184,7 +183,7 @@ const metricLabels = [
 
 document.addEventListener("DOMContentLoaded", () => {
   setupSignIn();
-  setupRegionSelector();
+  setupRegionSelector(); // updated below
 });
 
 function setupSignIn() {
@@ -202,14 +201,21 @@ function setupSignIn() {
 }
 
 function setupRegionSelector() {
-  const regionSelector = document.getElementById("region-select");
-  if (!regionSelector) return;
+  const countrySelect = document.getElementById("country-select");
+  const stateSelect = document.getElementById("state-select");
+  const cityInput = document.getElementById("city-input");
 
-  regionSelector.addEventListener("change", async (e) => {
-    const regionKey = e.target.value;
+  cityInput.addEventListener("input", async () => {
+    const country = countrySelect.value;
+    const state = stateSelect.value;
+    const city = cityInput.value;
+    if (!country || !state || !city) return;
+
+    const regionKey = `${state}/${city}/${country}`;
     const config = sheetIndex[regionKey];
+
     if (!accessToken) return alert("⚠️ Please sign in first.");
-    if (!config) return showError("⚠️ Region not configured.");
+    if (!config) return showError(`⚠️ Region not found: ${regionKey}`);
 
     try {
       const rows = await fetchSheetData(config);
@@ -254,14 +260,12 @@ function renderTable(rows) {
     const num2024 = parseFloat(avg2024 || 0);
     const num2025 = parseFloat(avg2025 || 0);
 
-    // Standard value cells
     [task, avg2024, avg2025].forEach(cell => {
       const td = document.createElement("td");
       td.textContent = cell ?? "";
       tr.appendChild(td);
     });
 
-    // Bar-enhanced difference cell
     const diffTd = document.createElement("td");
     diffTd.className = "diff-cell";
 
@@ -273,7 +277,7 @@ function renderTable(rows) {
         percentChange < 0 ? "negative" :
         "neutral";
 
-      const barWidth = Math.min(Math.abs(percentChange), 100); // cap width at 100%
+      const barWidth = Math.min(Math.abs(percentChange), 100);
 
       diffTd.innerHTML = `
         <div class="bar-cell">
@@ -294,6 +298,7 @@ function renderTable(rows) {
   container.innerHTML = "";
   container.appendChild(table);
 }
+
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
