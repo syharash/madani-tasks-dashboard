@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🌍 Regional Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      max-width: 640px;
+    }
+    h2 {
+      margin-bottom: 16px;
+    }
+    .selector-group {
+      margin: 16px 0;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    select, input {
+      padding: 6px;
+      margin-bottom: 12px;
+      min-width: 280px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📍 Regional Dashboard</h2>
+  <div class="selector-group">
+    <label for="country-select">Country:</label>
+    <select id="country-select">
+      <option value="">-- Choose a country --</option>
+    </select>
+
+    <label for="state-select">State:</label>
+    <select id="state-select" disabled>
+      <option value="">-- Choose a state --</option>
+    </select>
+
+    <label for="city-input">City:</label>
+    <input list="city-options" id="city-input" placeholder="Start typing a city..." disabled />
+    <datalist id="city-options"></datalist>
+  </div>
+
+  <script>
+    const regionData = {
+      "USA": {
+        "California": ["Elk Grove", "Riverside", "Sacramento", "Woodland", "Yuba City"],
+        "Florida": ["Miami"],
+        "Georgia": ["Lilburn"],
+        "Illinois": ["Bloomington", "Chicago", "Lombard", "Schaumburg", "Skokie"],
+        "Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
+        "New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
+        "Texas": ["New Orleans", "Sugar Land", "Wylie"],
+        "Washington": ["Lynwood"]
+      },
+      "Canada": {
+        "Ontario": ["Toronto"],
+        "Quebec": ["Montreal"]
+      }
+    };
+
+    const countrySelect = document.getElementById("country-select");
+    const stateSelect = document.getElementById("state-select");
+    const cityInput = document.getElementById("city-input");
+    const cityOptions = document.getElementById("city-options");
+
+    // 🧠 Populate country options
+    Object.keys(regionData).forEach(country => {
+      const opt = new Option(country, country);
+      countrySelect.add(opt);
+    });
+
+    // 🧠 Handle country change
+    countrySelect.addEventListener("change", () => {
+      const country = countrySelect.value;
+      stateSelect.innerHTML = '<option value="">-- Choose a state --</option>';
+      stateSelect.disabled = !regionData[country];
+      cityInput.disabled = true;
+      cityOptions.innerHTML = '';
+
+      if (regionData[country]) {
+        Object.keys(regionData[country]).forEach(state => {
+          const opt = new Option(state, state);
+          stateSelect.add(opt);
+        });
+      }
+    });
+
+    // 🧠 Handle state change
+    stateSelect.addEventListener("change", () => {
+      const country = countrySelect.value;
+      const state = stateSelect.value;
+      const cities = regionData[country]?.[state] || [];
+
+      cityInput.value = "";
+      cityInput.disabled = !cities.length;
+      cityOptions.innerHTML = '';
+
+      cities.forEach(city => {
+        const opt = document.createElement("option");
+        opt.value = city;
+        cityOptions.appendChild(opt);
+      });
+    });
+
+    // 🧠 Handle city selection
+    cityInput.addEventListener("input", () => {
+      const country = countrySelect.value;
+      const state = stateSelect.value;
+      const city = cityInput.value;
+
+      if (!country || !state || !city) return;
+      const regionKey = `${country}/${state}/${city}`;
+
+      console.log("Selected regionKey:", regionKey);
+      saveSelection(regionKey);
+      fetchSheetData(sheetIndex[regionKey]); // ↩️ Connect to your fetch logic
+    });
+
+    // 🧠 Save to local storage
+    const saveSelection = key => localStorage.setItem("regionKey", key);
+
+    // 🧠 Restore from previous session
+    window.addEventListener("load", () => {
+      const savedKey = localStorage.getItem("regionKey");
+      if (!savedKey) return;
+
+      const [country, state, city] = savedKey.split("/");
+      if (!regionData[country]?.[state]?.includes(city)) return;
+
+      countrySelect.value = country;
+      countrySelect.dispatchEvent(new Event("change"));
+
+      setTimeout(() => {
+        stateSelect.value = state;
+        stateSelect.dispatchEvent(new Event("change"));
+
+        setTimeout(() => {
+          cityInput.value = city;
+          cityInput.dispatchEvent(new Event("input"));
+        }, 300);
+      }, 300);
+    });
+
+    // 📦 Your sheetIndex mapping (stubbed for demo)
+    const sheetIndex = {
+      "USA/California/Sacramento": "Sheet1",
+      "Canada/Ontario/Toronto": "Sheet2"
+      // Add more regionKey: sheetName mappings as needed
+    };
+
+    // 🧪 Sample fetch logic
+    function fetchSheetData(sheetName) {
+      if (!sheetName) return console.warn("Missing sheet name for region.");
+      console.log("Fetching data from:", sheetName);
+      // Actual fetch logic goes here...
+    }
+  </script>
+<script src="app.js"></script>
+</body>
+</html>
