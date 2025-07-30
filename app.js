@@ -181,42 +181,53 @@ const metricLabels = [
   "Total Number of Participants",
  ];
 
-document.getElementById("signin-btn").onclick = () => {
-  const tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
-    scope:
-      "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
-    callback: (tokenResponse) => {
-      accessToken = tokenResponse.access_token;
-      alert("✅ Signed in successfully!");
+document.addEventListener("DOMContentLoaded", () => {
+  setupSignIn();
+  setupRegionSelector();
+});
+
+function setupSignIn() {
+  document.getElementById("signin-btn").onclick = () => {
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
+      callback: (tokenResponse) => {
+        accessToken = tokenResponse.access_token;
+        alert("✅ Signed in successfully!");
+      }
+    });
+    tokenClient.requestAccessToken();
+  };
+}
+
+function setupRegionSelector() {
+  const regionSelector = document.getElementById("region-select");
+  if (!regionSelector) return;
+
+  regionSelector.addEventListener("change", async (e) => {
+    const regionKey = e.target.value;
+    const config = sheetIndex[regionKey];
+    if (!accessToken) return alert("⚠️ Please sign in first.");
+    if (!config) return showError("⚠️ Region not configured.");
+
+    try {
+      const rows = await fetchSheetData(config);
+      renderTable(rows);
+    } catch (err) {
+      console.error("Sheet fetch failed:", err);
+      showError("❌ Failed to load sheet data.");
     }
   });
-  tokenClient.requestAccessToken();
-};
+}
 
-document.getElementById("region-select").addEventListener("change", async (e) => {
-  const regionKey = e.target.value;
-  const config = sheetIndex[regionKey];
-  if (!accessToken) return alert("⚠️ Please sign in first.");
-  if (!config) return showError("⚠️ Region not configured.");
-  try {
-    const rows = await fetchSheetData(config);
-    renderTable(rows);
-  } catch (err) {
-    console.error("Sheet fetch failed:", err);
-    showError("❌ Failed to load sheet data.");
-  }
-});
 async function fetchSheetData(config) {
-  const rawRange = `'${config.range.split("!")[0]}'!${config.range.split("!")[1]}`; // wrap only sheet name
-  const res = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${rawRange}`,
-    { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
+  const rawRange = `'${config.range.split("!")[0]}'!${config.range.split("!")[1]}`;
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${rawRange}`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
   const data = await res.json();
   return data.values || [];
 }
-
 
 function renderTable(rows) {
   const container = document.getElementById("tableContainer");
@@ -226,7 +237,7 @@ function renderTable(rows) {
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
-  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference between 2024 and 2025"];
+  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference"];
   const headRow = document.createElement("tr");
   headers.forEach(header => {
     const th = document.createElement("th");
@@ -239,7 +250,10 @@ function renderTable(rows) {
     const tr = document.createElement("tr");
     const [task, avg2024, avg2025] = row;
 
-    const diff = (parseFloat(avg2025) - parseFloat(avg2024)).toFixed(2);
+    const num2024 = parseFloat(avg2024 || 0);
+    const num2025 = parseFloat(avg2025 || 0);
+    const diff = (num2025 - num2024).toFixed(2);
+
     [task, avg2024, avg2025, diff].forEach(cell => {
       const td = document.createElement("td");
       td.textContent = cell ?? "";
@@ -259,6 +273,4 @@ function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
 }
-
-fetchSheetData();
 
