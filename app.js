@@ -282,8 +282,13 @@ function setupRegionDropdowns() {
   if (regionLabel) regionLabel.textContent = labelText;
   if (regionNote) regionNote.textContent = noteText;
 
-  // 👀 Show/hide city input
-  if (cityInputGroup) cityInputGroup.style.display = showCity ? "block" : "none";
+ // ✨ Trigger animated fade-in
+  regionNote.classList.remove("visible"); // reset
+  void regionNote.offsetWidth; // force reflow to restart animation
+  regionNote.classList.add("visible");
+   
+// 👀 Show/hide city input
+  if (cityInputGroup) cityInputGroup.classList.toggle("hidden", !showCity);
   cityInput.disabled = !showCity;
 
   // 🧼 Cleanup if city input is hidden
