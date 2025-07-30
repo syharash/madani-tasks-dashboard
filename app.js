@@ -211,7 +211,7 @@ function setupRegionSelector() {
     const city = cityInput.value;
     if (!country || !state || !city) return;
 
-    const regionKey = `${country}/${state}/${city}`;
+    const regionKey = `${country}/${state}/${city}`.replace(/\s+/g, " ").trim();
     const config = sheetIndex[regionKey];
 
     if (!accessToken) return alert("⚠️ Please sign in first.");
