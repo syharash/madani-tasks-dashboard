@@ -34,6 +34,32 @@
   width: 100%;
   max-width: 400px;
   }
+
+/* 🔽 INSERT NEW BLOCK BELOW */
+#regionFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+#regionFilters select {
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* Continue with this 👇 */
+.city-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 .city-input-wrap {
   display: flex;
   align-items: center;
