@@ -194,6 +194,19 @@ document.getElementById("signin-btn").onclick = () => {
   tokenClient.requestAccessToken();
 };
 
+document.getElementById("region-select").addEventListener("change", async (e) => {
+  const regionKey = e.target.value;
+  const config = sheetIndex[regionKey];
+  if (!accessToken) return alert("⚠️ Please sign in first.");
+  if (!config) return showError("⚠️ Region not configured.");
+  try {
+    const rows = await fetchSheetData(config);
+    renderTable(rows);
+  } catch (err) {
+    console.error("Sheet fetch failed:", err);
+    showError("❌ Failed to load sheet data.");
+  }
+});
 async function fetchSheetData(config) {
   const rawRange = `'${config.range.split("!")[0]}'!${config.range.split("!")[1]}`; // wrap only sheet name
   const res = await fetch(
