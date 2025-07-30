@@ -427,6 +427,11 @@ function renderTable(rows) {
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
+  const status = document.getElementById("statusBanner");
+  if (status) {
+    status.textContent = msg;
+    status.classList.add("error");
+  }
 }
 function clearError() {
   const container = document.getElementById("tableContainer");
