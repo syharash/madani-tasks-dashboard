@@ -245,22 +245,56 @@ function setupRegionDropdowns() {
     }
   });
 
-  stateSelect.addEventListener("change", () => {
-    const country = countrySelect.value;
-    const state = stateSelect.value;
-    const cities = regionData[country]?.[state] || [];
+ stateSelect.addEventListener("change", () => {
+  const country = countrySelect.value;
+  const state = stateSelect.value;
+  const cities = regionData[country]?.[state] || [];
 
-    cityInput.value = "";
-    cityInput.disabled = !cities.length;
-    cityOptions.innerHTML = "";
-
-    cities.forEach(city => {
-      const opt = document.createElement("option");
-      opt.value = city;
-      cityOptions.appendChild(opt);
-    });
+  // 🔁 Update city options
+  cityInput.value = "";
+  cityOptions.innerHTML = "";
+  cities.forEach(city => {
+    const opt = document.createElement("option");
+    opt.value = city;
+    cityOptions.appendChild(opt);
   });
 
+  // 🌎 Tailored label and note logic
+  const regionLabel = document.querySelector('label[for="city-input"]');
+  const regionNote = document.getElementById("region-note");
+  const cityInputGroup = cityInput.closest('.selector-group') || cityInput;
+
+  let labelText = "City:";
+  let noteText = "";
+  let showCity = true;
+
+  if (state === "USA") {
+    labelText = "Country:";
+    noteText = "Select the country for Country Summary Metrics.";
+    showCity = false;
+  } else if (state === "States") {
+    labelText = "State:";
+    noteText = "Select a state for summary metrics.";
+    showCity = false;
+  }
+
+  // 🖋 Apply dynamic guidance
+  if (regionLabel) regionLabel.textContent = labelText;
+  if (regionNote) regionNote.textContent = noteText;
+
+  // 👀 Show/hide city input
+  if (cityInputGroup) cityInputGroup.style.display = showCity ? "block" : "none";
+  cityInput.disabled = !showCity;
+
+  // 🧼 Cleanup if city input is hidden
+  if (!showCity) {
+    cityInput.value = "";
+    cityOptions.innerHTML = "";
+  }
+
+  // 🧭 Placeholder tuning
+  cityInput.placeholder = showCity ? "Start typing a city..." : labelText;
+});
   cityInput.addEventListener("input", async () => {
     const country = countrySelect.value;
     const state = stateSelect.value;
@@ -271,7 +305,10 @@ function setupRegionDropdowns() {
     const config = sheetIndex[regionKey];
     localStorage.setItem("regionKey", regionKey);
 
-    if (!accessToken) return alert("⚠️ Please sign in first.");
+    if (!accessToken) {
+      showError("⚠️ You need to sign in to view data.");
+      return;
+    }
     if (!config) return showError(`❌ Region not found: ${regionKey}`);
 
     try {
