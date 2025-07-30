@@ -28,7 +28,13 @@
     font-size: 0.875rem;
     color: #666;
     margin-top: 4px;
-    transition: opacity 0.3s ease;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .input-note.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
     #region-select {
       margin: 12px 0;
