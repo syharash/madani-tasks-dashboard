@@ -216,7 +216,7 @@ function setupRegionDropdowns() {
       "New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
       "Texas": ["New Orleans", "Sugar Land", "Wylie"],
       "Washington": ["Lynwood"],
-      "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"]
+      "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
       "USA": ["USA"]
     }
   };
