@@ -7,135 +7,135 @@ let accessToken = "";
 
 
 const sheetIndex = {
-  "California/Elk Groove/USA": {
+  "USA/California/Elk Groove": {
     id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4",
-    range: "Sheet1!A5:D41"
+    range: "Sheet1!A1:D41"
   },
-  "California/Riverside/USA": {
+  "USA/California/Riverside": {
     id: "17dNm5PDmomzXkRooiQbOe-GEivFCM-mbRnbKjcLIpeU",
     range: "Sheet1!A5:D41"
   },
-  "California/Sacramento/USA": {
+  "USA/California/Sacramento": {
     id: "1UBqdC7lbBOlxSSIi3-Cva826jam6B2JbAtNFuWpTbg8",
     range: "Sheet1!A5:D41"
   },
-  "California/Woodland/USA": {
+  "USA/California/Woodland": {
     id: "12zzwPmOSIAUAEyWet1MKfvrqp-4NAHnWWrG5JvnoeNI",
     range: "Sheet1!A5:D41"
   },
-  "California/Yuba City/USA": {
+  "USA/California/Yuba City": {
     id: "1YQH5S0lxUr37VwaZBzhOCUjoL6bRJ6lC-nBREkobNF8",
     range: "Sheet1!A5:D41"
   },
-  "Florida/Miami/USA": {
+  "USA/Florida/Miami": {
     id: "1llr7vVUIZW9QME8RGm4FE-7m267TgYS7Ultw_7QncVI",
     range: "Sheet1!A5:D41"
   },
-  "Georgia/Lilburn/USA": {
+  "USA/Georgia/Lilburn": {
     id: "15UWcv2eVAyYzvedfg4EfhmRjyuoppd2b-j6PjvPAPn4",
     range: "Sheet1!A5:D41"
   },
-  "Illinois/Bloomington/USA": {
+  "USA/Illinois/Bloomington": {
     id: "17nhZd9fMoxtaDLRVMIHqI8caskFc40XjQciC7F1vFpE",
     range: "Sheet1!A5:D41"
   },
-  "Illinois/Chicago/USA": {
+  "USA/Illinois/Chicago": {
     id: "13E1CISmTfkGL73ASN5J0TaOSclo0SbZLRPZqQw-8W_k",
     range: "Sheet1!A5:D41"
   },
-  "Illinois/Lombard/USA": {
+  "USA/Illinois/Lombard": {
     id: "1OIUTzrD2_DY8l1I5QzbOkmtLQZfJGrNJL9zzG4ks7zI",
     range: "Sheet1!A5:D41"
   },
-  "Illinois/Schaumburg/USA": {
+  "USA/Illinois/Schaumburg": {
     id: "1WB49Iv0EXyQGjz9oYMrD2usbRMTgJjV5t9iBui5wdT8",
     range: "Sheet1!A5:D41"
   },
-  "Illinois/Skokie/USA" : {
+  "USA/Illinois/Skokie" : {
     id: "1ea8qSaisxImAkng3tTKa-U0ETXm9WsC4cJ5w42UslZo",
     range: "Sheet1!A5:D41"
   },
-  "Maryland/Baltimore/USA" : {
+  "USA/Maryland/Baltimore" : {
     id: "1D-er6wHw6VJwLl1Vy7GXVi1KekxcAW6lR2-zgcxs4Yg",
     range: "Sheet1!A5:D41"
   },
-  "Maryland/Ellicot City/USA" : {
+  "USA/Maryland/Ellicot City" : {
     id: "1nVQpqXs6yMuZgVwbyZJXblx4Yye7nMABcBAXIK8z9KI",
     range: "Sheet1!A5:D41"
   },
-  "Maryland/Langhorne/USA" : {
+  "USA/Maryland/Langhorne" : {
     id: "1LGrmCa-XaKWekiGMQiKDdGdyiH5Z75ozpR03pFjjSdc",
     range: "Sheet1!A5:D41"
   },
-  "Maryland/Woodbridge/USA" : {
+  "USA/Maryland/Woodbridge" : {
     id: "1it9kwrkmtllzSi7fwRD1kt4g__gYHDu8epFY3rtvZME",
     range: "Sheet1!A5:D41"
   },
-  "New York/Bronx/USA" : {
+  "USA/New York/Bronx" : {
     id: "1_FPyNfoRvDuU_-V3snv1_lu4LY7VWgKG5Ai-ifFDneQ",
     range: "Sheet1!A5:D41"
   },
-  "New York/Brooklyn/USA" : {
+  "USA/New York/Brooklyn" : {
     id: "1XZKeCe7TiSltyYBOvVZOiNrQ9vQByjjpSexh5NhITtY",
     range: "Sheet1!A5:D41"
   },
-  "New York/Queens/USA" : {
+  "USA/New York/Queens" : {
     id: "1J8DSpXU5VtyRvIqiSLbMYlfZAAChM4Kt89wsQwBMpAk",
     range: "Sheet1!A5:D41"
   },
-  "New York/Valley Stream/USA" : {
+  "USA/New York/Valley Stream" : {
     id: "1t2QkPU66O9VxdLG9cvy0U0LJyfaxJ56SSrP5ItOsPc8",
     range: "Sheet1!A5:D41"
   },
-  "Texas/New Orleans/USA" : {
+  "USA/Texas/New Orleans" : {
     id: "1vU1LFaUqW0m1slHKVIAdCUT1zgLiwLAJ072w-I3zJM4",
     range: "Sheet1!A5:D41"
   },
-  "Texas/Sugar Land/USA" : {
+  "USA/Texas/Sugar Land/USA" : {
     id: "1eTZ6yseR7zaqbVRQK82NaFA5qxGzhtQHkUo-3WgMYFk",
     range: "Sheet1!A5:D41"
   },
-  "Texas/Wylie/USA" : {
+  "USA/Texas/Wylie/USA" : {
     id: "1KjioDwq3G28fx59fTCBMP8uZ8yeLWnAsMq8ZCwbQ8ws",
     range: "Sheet1!A5:D41"
   },
-  "Washington/Lynwood/USA" : {
+  "USA/Washington/Lynwood/USA" : {
     id: "1bMMaZrx7JtNyu2Gymvw9GTrwKBzsV_ORw9hyrrpvw9Y",
     range: "Sheet1!A5:D41"
   },
-  "California/USA" : {
+  "USA/States/California" : {
     id: "1RlMjNlQ6MGuD2Ys2tTtCLQwdvPffs2SknqsoVOmZTdo",
     range: "Sheet1!A5:D41"
   },
-  "Florida/USA" : {
+  "USA/States/Florida" : {
     id: "1Ou5Z159QAkXIoL5HeHeNd8MiKaXiO7ihL5crHawd53g",
     range: "Sheet1!A5:D41"
   },
-  "Georgia/USA" : {
+  "USA/Sates/Georgia" : {
     id: "1wpmACw4kp3-TkCSpLcEKluiyPEggaoh7Nx5IE5Trank",
     range: "Sheet1!A5:D41"
   },
-  "Illinois/USA" : {
+  "USA/States/Illinois" : {
     id: "1zAlkC-PJVtAzhBTI7iIVwuLwxB8fDa_Q4wBuzDSiu6g",
     range: "Sheet1!A5:D41"
   },
-  "Maryland/USA" : {
+  "USA/States/Maryland" : {
     id: "1WN1DdDte__4SqTJrOaAHQZihp_OkIncO_Od3_ENm8C8",
     range: "Sheet1!A5:D41"
   },
-  "New York/USA" : {
+  "USA/States/New York" : {
     id: "1-UwhJEWsq4XrWcgH_6TBDTEVzMjNFB6wsA_RKuWcr_A",
     range: "Sheet1!A5:D41"
   },
-  "Texas/USA" : {
+  "USA/States/Texas" : {
     id: "1iP72PvYvGBZ9J-gNEItweKLY85f_gI-4tzI8ojAMiKg",
     range: "Sheet1!A5:D41"
   },
-  "Washington/USA" : {
+  "USA/States/Washington" : {
     id: "1FyvZMhrpWSBcwc7qtMloChB6r9aYcuHSL7IarS-4ZGw",
     range: "Sheet1!A5:D41"
   },
-  "USA" : {
+  "USA/USA" : {
     id: "1elFQ7EojnR-7mfbG430HU83zP-q62TIgKAWiNo9zo9s",
     range: "Sheet1!A5:D41"
   }
@@ -181,18 +181,22 @@ const metricLabels = [
   "Total Number of Participants",
  ];
 
+// 🚀 Initialize after DOM ready
 document.addEventListener("DOMContentLoaded", () => {
   setupSignIn();
-  setupRegionSelector(); // updated below
+  setupRegionDropdowns();
+  restorePreviousSelection();
 });
 
+// 🔐 Google OAuth Setup
 function setupSignIn() {
-  document.getElementById("signin-btn").onclick = () => {
+  const btn = document.getElementById("signin-btn");
+  btn.onclick = () => {
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
-      callback: (tokenResponse) => {
-        accessToken = tokenResponse.access_token;
+      callback: (resp) => {
+        accessToken = resp.access_token;
         alert("✅ Signed in successfully!");
       }
     });
@@ -200,10 +204,62 @@ function setupSignIn() {
   };
 }
 
-function setupRegionSelector() {
+// 🧭 Region Data and Dropdown Initialization
+function setupRegionDropdowns() {
+  const regionData = {
+    "USA": {
+      "California": ["Elk Grove", "Riverside", "Sacramento", "Woodland", "Yuba City"],
+      "Florida": ["Miami"],
+      "Georgia": ["Lilburn"],
+      "Illinois": ["Bloomington", "Chicago", "Lombard", "Schaumburg", "Skokie"],
+      "Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
+      "New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
+      "Texas": ["New Orleans", "Sugar Land", "Wylie"],
+      "Washington": ["Lynwood"]
+      "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"]
+      "USA": ["USA"]
+    }
+  };
+
   const countrySelect = document.getElementById("country-select");
   const stateSelect = document.getElementById("state-select");
   const cityInput = document.getElementById("city-input");
+  const cityOptions = document.getElementById("city-options");
+
+  // 🔽 Populate countries
+  Object.keys(regionData).forEach(country => {
+    countrySelect.add(new Option(country, country));
+  });
+
+  countrySelect.addEventListener("change", () => {
+    const country = countrySelect.value;
+    stateSelect.innerHTML = '<option value="">-- Choose a state --</option>';
+    cityInput.disabled = true;
+    cityOptions.innerHTML = "";
+    stateSelect.disabled = !regionData[country];
+
+    if (regionData[country]) {
+      Object.keys(regionData[country]).forEach(state => {
+        stateSelect.add(new Option(state, state));
+      });
+    }
+  });
+
+  stateSelect.addEventListener("change", () => {
+    const country = countrySelect.value;
+    const state = stateSelect.value;
+    const cities = regionData[country]?.[state] || [];
+
+    cityInput.value = "";
+    cityInput.disabled = !cities.length;
+    cityOptions.innerHTML = "";
+
+    cities.forEach(city => {
+      const opt = document.createElement("option");
+      opt.value = city;
+      cityOptions.appendChild(opt);
+    });
+  });
 
   cityInput.addEventListener("input", async () => {
     const country = countrySelect.value;
@@ -213,9 +269,10 @@ function setupRegionSelector() {
 
     const regionKey = `${country}/${state}/${city}`.replace(/\s+/g, " ").trim();
     const config = sheetIndex[regionKey];
+    localStorage.setItem("regionKey", regionKey);
 
     if (!accessToken) return alert("⚠️ Please sign in first.");
-    if (!config) return showError(`⚠️ Region not found: ${regionKey}`);
+    if (!config) return showError(`❌ Region not found: ${regionKey}`);
 
     try {
       const rows = await fetchSheetData(config);
@@ -227,24 +284,51 @@ function setupRegionSelector() {
   });
 }
 
+// 💾 Restore previous selection from storage
+function restorePreviousSelection() {
+  const savedKey = localStorage.getItem("regionKey");
+  if (!savedKey) return;
+
+  const [country, state, city] = savedKey.split("/");
+  const countrySelect = document.getElementById("country-select");
+  const stateSelect = document.getElementById("state-select");
+  const cityInput = document.getElementById("city-input");
+
+  countrySelect.value = country;
+  countrySelect.dispatchEvent(new Event("change"));
+
+  setTimeout(() => {
+    stateSelect.value = state;
+    stateSelect.dispatchEvent(new Event("change"));
+
+    setTimeout(() => {
+      cityInput.value = city;
+      cityInput.dispatchEvent(new Event("input"));
+    }, 300);
+  }, 300);
+}
+
+// 📡 Fetch from Google Sheets API
 async function fetchSheetData(config) {
-  const rawRange = `'${config.range.split("!")[0]}'!${config.range.split("!")[1]}`;
-  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${rawRange}`, {
+  const [sheetName, rangePart] = config.range.split("!");
+  const range = `'${sheetName}'!${rangePart}`;
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/${range}`, {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
   return data.values || [];
 }
 
+// 📊 Render the table
 function renderTable(rows) {
   const container = document.getElementById("tableContainer");
   if (!container || !rows || rows.length === 0) return;
 
+  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference"];
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
-  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference"];
   const headRow = document.createElement("tr");
   headers.forEach(header => {
     const th = document.createElement("th");
@@ -272,11 +356,7 @@ function renderTable(rows) {
     if (num2024 !== 0) {
       const percentChange = ((num2025 - num2024) / num2024) * 100;
       const changeRounded = percentChange.toFixed(2);
-      const diffClass =
-        percentChange > 0 ? "positive" :
-        percentChange < 0 ? "negative" :
-        "neutral";
-
+      const diffClass = percentChange > 0 ? "positive" : percentChange < 0 ? "negative" : "neutral";
       const barWidth = Math.min(Math.abs(percentChange), 100);
 
       diffTd.innerHTML = `
@@ -299,6 +379,7 @@ function renderTable(rows) {
   container.appendChild(table);
 }
 
+// ❗ Error handler
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
