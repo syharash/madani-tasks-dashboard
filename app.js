@@ -91,22 +91,6 @@ function setupSignIn() {
 }
 
 // 🧭 Region logic
-//function setupRegionDropdowns() {
-//  const regionData = {
-  //  "USA": {
-    //  "California": ["Elk Grove", "Riverside", "Sacramento", "Woodland", "Yuba City"],
-      //"Florida": ["Miami"],
-      //"Georgia": ["Lilburn"],
-      //"Illinois": ["Bloomington", "Chicago", "Lombard", "Schaumburg", "Skokie"],
-      //"Maryland": ["Baltimore", "Ellicot City", "Langhorne", "Woodbridge"],
-      //"New York": ["Bronx", "Brooklyn", "Queens", "Valley Stream"],
-      //"Texas": ["New Orleans", "Sugar Land", "Wylie"],
-      //"Washington": ["Lynwood"],
-      //"States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
-      //"USA": ["USA"]
-   // }
-  //};
-
   const countrySelect = document.getElementById("country-select");
   const stateSelect = document.getElementById("state-select");
   const cityInput = document.getElementById("city-input");
@@ -291,32 +275,6 @@ function setupRegionFilters() {
       ? `Now enter a city from ${selectedState}.`
       : `No cities found for ${selectedState}.`;
   });
-}
-
-function getStatesForCountry(code) {
-  switch (code) {
-    case "USA":
-      return [
-        { code: "CA", name: "California" },
-        { code: "NY", name: "New York" },
-        { code: "TX", name: "Texas" },
-        // More states
-      ];
-    case "CAN":
-      return [
-        { code: "ON", name: "Ontario" },
-        { code: "BC", name: "British Columbia" },
-        { code: "QC", name: "Quebec" }
-      ];
-    case "MEX":
-      return [
-        { code: "CMX", name: "Mexico City" },
-        { code: "JAL", name: "Jalisco" },
-        { code: "NL", name: "Nuevo León" }
-      ];
-    default:
-      return [];
-  }
 }
 
 function bindCityInput() {
