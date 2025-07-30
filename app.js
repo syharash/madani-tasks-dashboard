@@ -321,6 +321,8 @@ function setupRegionDropdowns() {
     try {
       const rows = await fetchSheetData(config);
       renderTable(rows);
+      cityInput.setAttribute("placeholder", city);
+      cityInput.value = "";
     } catch (err) {
       console.error("Sheet fetch failed:", err);
       showError("❌ Failed to load sheet data.");
