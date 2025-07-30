@@ -180,9 +180,17 @@ const metricLabels = [
   "Total Number of Participants",
  ];
 
-const getAuthToken = () => {
-  // Your OAuth token logic here — ideally loaded from localStorage or a secure flow
-  return "Bearer YOUR_OAUTH_TOKEN";
+document.getElementById("signin-btn").onclick = () => {
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope:
+      "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
+    callback: (tokenResponse) => {
+      accessToken = tokenResponse.access_token;
+      alert("✅ Signed in successfully!");
+    }
+  });
+  tokenClient.requestAccessToken();
 };
 
 async function fetchSheetData(regionKey) {
