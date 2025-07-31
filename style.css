@@ -118,7 +118,13 @@ td:first-child {
   background-color: #e8f4ff;
   padding: 10px 16px;
   text-align: center;
-  }
+  border-bottom: 2px solid #0078d7;
+  font-size: 1.1rem;
+  color: #005fa1;
+  white-space: pre-wrap;     
+  word-break: break-word;    
+  overflow-wrap: break-word;   
+}
 .bar-cell {
   position: relative;
   height: 1.2em;
