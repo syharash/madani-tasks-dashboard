@@ -355,7 +355,7 @@ async function fetchRegionContext(config) {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
-  return data?.values?.[0]?.[0] || "Region info unavailable";
+  return data?.values? || [["Region info unavailable"]];
 }
 
 // 📊 Table renderer with region context
@@ -368,14 +368,16 @@ function renderTable(rows, regionContext) {
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
-  // 📍 Region Context Row
-  const contextRow = document.createElement("tr");
-  const contextCell = document.createElement("td");
-  contextCell.colSpan = 4;
-  contextCell.textContent = `📍 ${regionContext}`;
-  contextCell.className = "region-context";
-  contextRow.appendChild(contextCell);
-  table.appendChild(contextRow);
+  // 📍 Region Context Rows (A1:D3)
+  regionContext.forEach(row => {
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = 4;
+    td.textContent = row.join(" ").trim();
+    td.className = "region-context";
+    tr.appendChild(td);
+    table.appendChild(tr);
+  });
 
   // 🧭 Header Row
   const headRow = document.createElement("tr");
