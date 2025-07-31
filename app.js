@@ -99,6 +99,10 @@ function setupSignIn() {
   const stateSelect = document.getElementById("stateDropdown");
   const cityInput = document.getElementById("city-input");
   const cityOptions = document.getElementById("city-options");
+  const clearBtn = document.getElementById("clearBtn");
+  const regionNote = document.getElementById("region-note");
+  const tableContainer = document.getElementById("tableContainer");
+
 
    countrySelect.addEventListener("change", () => {
    const country = countrySelect.value;
@@ -232,7 +236,13 @@ function setupRegionFilters() {
   const cityInput = document.getElementById("city-input");
   const cityOptions = document.getElementById("city-options");
 
+  const seenCountries = new Set();
+  countryDropdown.innerHTML = '<option value="">-- Choose a country --</option>';
+
   Object.keys(regionData).forEach(country => {
+    if (seenCountries.has(country)) return;
+    seenCountries.add(country);
+
     const opt = document.createElement("option");
     opt.value = country;
     opt.textContent = country;
@@ -280,14 +290,37 @@ function bindCityInput() {
   const input = document.getElementById("city-input");
   const note = document.getElementById("region-note");
 
-  input.addEventListener("input", () => {
-    const value = input.value.trim();
-    if (value.length > 0) {
-      note.style.opacity = 1;
-      note.textContent = `Filtering data for "${value}"…`;
-    } else {
-      note.style.opacity = 0;
-      note.textContent = "";
+  input.addEventListener("input", async () => {
+    const country = document.getElementById("countryDropdown").value;
+    const state = document.getElementById("stateDropdown").value;
+    const city = input.value.trim();
+    if (!country || !state || !city) return;
+
+    const regionKey = `${country}/${state}/${city}`.replace(/\s+/g, " ").trim();
+    const config = sheetIndex[regionKey];
+    localStorage.setItem("regionKey", regionKey);
+
+    clearError();
+
+    if (!accessToken) {
+      showError("⚠️ You need to sign in to view data.");
+      return;
+    }
+
+    if (!config) {
+      showError(`❌ Region not found: ${regionKey}`);
+      return;
+    }
+
+    try {
+      const rows = await fetchSheetData(config);
+      const regionContext = await fetchRegionContext(config);
+      renderTable(rows, regionContext);
+      input.setAttribute("placeholder", city);
+      input.value = "";
+    } catch (err) {
+      console.error("Sheet fetch failed:", err);
+      showError("❌ Failed to load sheet data.");
     }
   });
 }
@@ -301,6 +334,7 @@ function bindClearButton() {
     input.disabled = true;
     note.style.opacity = 0;
     note.textContent = "";
+    document.getElementById("tableContainer").innerHTML = "";
   });
 }
 
@@ -315,8 +349,17 @@ async function fetchSheetData(config) {
   return data.values || [];
 }
 
-// 📊 Table renderer
-function renderTable(rows) {
+// 📍 Fetch Region Context from A1
+async function fetchRegionContext(config) {
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/Sheet1!A1`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  const data = await res.json();
+  return data?.values?.[0]?.[0] || "Region info unavailable";
+}
+
+// 📊 Table renderer with region context
+function renderTable(rows, regionContext) {
   const container = document.getElementById("tableContainer");
   if (!container || !rows || rows.length === 0) return;
 
@@ -325,6 +368,16 @@ function renderTable(rows) {
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
+  // 📍 Region Context Row
+  const contextRow = document.createElement("tr");
+  const contextCell = document.createElement("td");
+  contextCell.colSpan = 4;
+  contextCell.textContent = `📍 ${regionContext}`;
+  contextCell.className = "region-context";
+  contextRow.appendChild(contextCell);
+  table.appendChild(contextRow);
+
+  // 🧭 Header Row
   const headRow = document.createElement("tr");
   headers.forEach(header => {
     const th = document.createElement("th");
@@ -374,6 +427,7 @@ function renderTable(rows) {
   container.innerHTML = "";
   container.appendChild(table);
 }
+
 function showError(msg) {
   const container = document.getElementById("tableContainer");
   if (container) container.textContent = msg;
