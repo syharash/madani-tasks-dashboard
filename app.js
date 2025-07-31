@@ -147,7 +147,7 @@ function setupSignIn() {
     const city = cityInput.value;
     if (!country || !state || !city) return;
 
-    const regionKey = `${country}/${state}/${city}`.replace(/\s+/g, " ").trim();
+    const regionKey = resolveRegionKey({ country, state, city });
     const config = sheetIndex[regionKey];
     localStorage.setItem("regionKey", regionKey);
 
