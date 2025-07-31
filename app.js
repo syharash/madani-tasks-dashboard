@@ -355,7 +355,7 @@ async function fetchRegionContext(config) {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
-  return data?.values? || [["Region info unavailable"]];
+  return (data && data.values) ? data.values : [["Region info unavailable"]];
 }
 
 // 📊 Table renderer with region context
