@@ -104,35 +104,46 @@ td:first-child {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Table container centered */
 #tableContainer {
-  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .diff-cell {
   white-space: nowrap;
   padding: 4px 8px;
 }
 /* 📍 Region Context Row */
+#dashboardWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Region context wrapper centers the block */
 #regionContextWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
   margin-bottom: 16px;
 }
 
-.region-context-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
+/* Region block styling */
 .region-context-block {
   width: 100%;
-  max-width: 800px; /* Match your table width */
+  max-width: 800px;
   padding: 12px 16px;
   background-color: #e8f4ff;
   border-left: 4px solid #0078d7;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  text-align: left;
+  text-align: center;
 }
 
+/* Region lines */
 .region-context-line {
   font-size: 15px;
   line-height: 1.4;
@@ -150,6 +161,8 @@ td:first-child {
   font-style: italic;
   color: #444;
 }
+
+
 .bar-cell {
   position: relative;
   height: 1.2em;
