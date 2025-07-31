@@ -1,4 +1,4 @@
-   body {
+body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
       padding: 20px;
@@ -111,6 +111,16 @@ td:first-child {
 .diff-cell {
   white-space: nowrap;
   padding: 4px 8px;
+}
+/* 📍 Region Context Row */
+.region-context {
+  font-weight: bold;
+  background-color: #e8f4ff;
+  padding: 10px 16px;
+  text-align: center;
+  border-bottom: 2px solid #0078d7;
+  font-size: 1.1rem;
+  color: #005fa1;
 }
 .bar-cell {
   position: relative;
