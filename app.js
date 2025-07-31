@@ -100,16 +100,12 @@ function setupSignIn() {
   const cityInput = document.getElementById("city-input");
   const cityOptions = document.getElementById("city-options");
 
-  Object.keys(regionData).forEach(country => {
-    countrySelect.add(new Option(country, country));
-  });
-
-  countrySelect.addEventListener("change", () => {
-    const country = countrySelect.value;
-    stateSelect.innerHTML = '<option value="">-- Choose a state --</option>';
-    cityInput.disabled = true;
-    cityOptions.innerHTML = "";
-    stateSelect.disabled = !regionData[country];
+   countrySelect.addEventListener("change", () => {
+   const country = countrySelect.value;
+   stateSelect.innerHTML = '<option value="">-- Choose a state --</option>';
+   cityInput.disabled = true;
+   cityOptions.innerHTML = "";
+   stateSelect.disabled = !regionData[country];
 
     if (regionData[country]) {
       Object.keys(regionData[country]).forEach(state => {
