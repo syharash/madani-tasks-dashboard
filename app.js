@@ -365,6 +365,7 @@ function renderTable(rows, regionContext) {
 
  // Clear previous content
 document.getElementById("regionContextWrapper").innerHTML = "";
+const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference in Percentage"];  
 container.innerHTML = "";
 
 // 📍 Region Context Block
