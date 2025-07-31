@@ -130,7 +130,10 @@ td:first-child {
   justify-content: center;
   margin-bottom: 16px;
 }
-
+.region-context-wrapper {
+  display: flex;
+  justify-content: center;
+}
 /* Region block styling */
 .region-context-block {
   width: 100%;
@@ -161,7 +164,6 @@ td:first-child {
   font-style: italic;
   color: #444;
 }
-
 
 .bar-cell {
   position: relative;
