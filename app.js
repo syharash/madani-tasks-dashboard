@@ -12,7 +12,7 @@ const regionData = {
       "Texas": ["New Orleans", "Sugar Land", "Wylie"],
       "Washington": ["Lynwood"],
       "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
-      "USA": ["USA"]
+      "": ["USA"]
      }
 };
 // const DEVELOPER_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw";
