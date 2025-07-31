@@ -208,8 +208,8 @@ function restorePreviousSelection() {
   if (!savedKey) return;
 
   const [country, state, city] = savedKey.split("/");
-  const countrySelect = document.getElementById("country-select");
-  const stateSelect = document.getElementById("state-select");
+  const countrySelect = document.getElementById("countryDropdown");
+  const stateSelect = document.getElementById("stateDropdown");
   const cityInput = document.getElementById("city-input");
 
   countrySelect.value = country;
