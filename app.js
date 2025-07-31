@@ -163,7 +163,6 @@ function setupSignIn() {
       showError("❌ Failed to load sheet data.");
     }
   });
-}
 
 // 🧩 Modular location handler
 function setLocationContext(labelText, placeholderText, options = [], enableInput = true) {
