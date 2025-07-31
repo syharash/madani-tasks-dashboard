@@ -372,12 +372,15 @@ function renderTable(rows, regionContext) {
     const regionBlock = document.createElement("div");
     regionBlock.className = "region-context-block";
 
-    regionContext.forEach(row => {
+  regionContext.forEach(row => {
+    const text = row.filter(cell => cell && cell.trim()).join(" ").trim();
+    if (text) {
       const line = document.createElement("div");
-      line.textContent = row.join(" ").trim();
+      line.textContent = text;
       line.className = "region-context-line";
       regionBlock.appendChild(line);
-    });
+    }  
+  });
 
     container.appendChild(regionBlock);
   }
