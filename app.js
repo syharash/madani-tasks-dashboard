@@ -351,7 +351,7 @@ async function fetchSheetData(config) {
 
 // 📍 Fetch Region Context from A1
 async function fetchRegionContext(config) {
-  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/Sheet1!A1`, {
+  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/Sheet1!A1:D3`, {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
