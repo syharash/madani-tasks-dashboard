@@ -12,7 +12,7 @@ const regionData = {
       "Texas": ["New Orleans", "Sugar Land", "Wylie"],
       "Washington": ["Lynwood"],
       "States": ["California", "Florida", "Georgia", "Illinois", "Maryland", "New York", "Texas", "Washington"],
-      "Country": ["USA"]
+      "USA": ["USA"]
      }
 };
 // const DEVELOPER_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw";
@@ -20,7 +20,7 @@ const regionData = {
 
 
 const sheetIndex = {
-  "USA/California/Elk Grove": {id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4", range: "Sheet1!A1:D41"},
+  "USA/California/Elk Grove": {id: "1RfkwD3PvC-nwV3tHVM8I706RMVzdBpWs4T0vOTnqZR4", range: "Sheet1!A5:D41"},
   "USA/California/Riverside": {id: "17dNm5PDmomzXkRooiQbOe-GEivFCM-mbRnbKjcLIpeU", range: "Sheet1!A5:D41"},
   "USA/California/Sacramento": {id: "1UBqdC7lbBOlxSSIi3-Cva826jam6B2JbAtNFuWpTbg8", range: "Sheet1!A5:D41"},
   "USA/California/Woodland": {id: "12zzwPmOSIAUAEyWet1MKfvrqp-4NAHnWWrG5JvnoeNI", range: "Sheet1!A5:D41"},
@@ -52,7 +52,7 @@ const sheetIndex = {
   "USA/States/New York" : {id: "1-UwhJEWsq4XrWcgH_6TBDTEVzMjNFB6wsA_RKuWcr_A", range: "Sheet1!A5:D41"},
   "USA/States/Texas" : {id: "1iP72PvYvGBZ9J-gNEItweKLY85f_gI-4tzI8ojAMiKg", range: "Sheet1!A5:D41"},
   "USA/States/Washington" : {id: "1FyvZMhrpWSBcwc7qtMloChB6r9aYcuHSL7IarS-4ZGw", range: "Sheet1!A5:D41"},
-  "USA/Country" : {id: "1elFQ7EojnR-7mfbG430HU83zP-q62TIgKAWiNo9zo9s", range: "Sheet1!A5:D41"}
+  "USA" : {id: "1elFQ7EojnR-7mfbG430HU83zP-q62TIgKAWiNo9zo9s", range: "Sheet1!A5:D41"}
 };
 
 const metricLabels = ["Waking up for Fajr", "Tafseer", "Dars in Masjid", "Home Dars", "Area Dars", "Total Dars", "Madarsa in Home","Participants in Home",
