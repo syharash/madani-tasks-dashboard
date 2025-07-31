@@ -113,15 +113,21 @@ td:first-child {
   padding: 4px 8px;
 }
 /* 📍 Region Context Row */
-.region-context-block {
+.region-context-wrapper {
+  display: flex;
+  justify-content: center;
   margin-bottom: 16px;
+}
+.region-context-block {
+  width: 100%;
+  max-width: 800px; /* Match your table width */
   padding: 12px 16px;
   background-color: #e8f4ff;
   border-left: 4px solid #0078d7;
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  text-align: center;
 }
-
 .region-context-line {
   font-size: 15px;
   line-height: 1.4;
