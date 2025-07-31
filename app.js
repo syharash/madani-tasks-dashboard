@@ -91,8 +91,8 @@ function setupSignIn() {
 }
 
 // 🧭 Region logic
-  const countrySelect = document.getElementById("country-select");
-  const stateSelect = document.getElementById("state-select");
+  const countrySelect = document.getElementById("countryDropdown");
+  const stateSelect = document.getElementById("stateDropdown");
   const cityInput = document.getElementById("city-input");
   const cityOptions = document.getElementById("city-options");
 
