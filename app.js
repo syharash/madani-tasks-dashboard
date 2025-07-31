@@ -365,7 +365,7 @@ function renderTable(rows, regionContext) {
 
   container.innerHTML = ""; // Clear previous content
 
-  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference"];
+  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference in Percentage"];
 
   // 📍 Region Context Block (above table)
   if (regionContext && regionContext.length > 0) {
