@@ -1,3 +1,7 @@
+// --- Imports ---
+// Utility for resolving region keys based on user selection
+import { resolveRegionKey } from './regionUtils.js';
+
 const CLIENT_ID = "515935803707-v7qshp425m1b4h5ru6jcmmmu99qbikgq.apps.googleusercontent.com";
 const API_KEY = "AIzaSyCl6PFx1jCh7xjc0HrEZbgAhkF7zRGU1Nw"; // Replace with actual API key
 let accessToken = "";
