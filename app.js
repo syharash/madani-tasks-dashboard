@@ -363,21 +363,29 @@ function renderTable(rows, regionContext) {
   const container = document.getElementById("tableContainer");
   if (!container || !rows || rows.length === 0) return;
 
+  container.innerHTML = ""; // Clear previous content
+
   const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference"];
+
+  // 📍 Region Context Block (above table)
+  if (regionContext && regionContext.length > 0) {
+    const regionBlock = document.createElement("div");
+    regionBlock.className = "region-context-block";
+
+    regionContext.forEach(row => {
+      const line = document.createElement("div");
+      line.textContent = row.join(" ").trim();
+      line.className = "region-context-line";
+      regionBlock.appendChild(line);
+    });
+
+    container.appendChild(regionBlock);
+  }
+
+  // 🧭 Table Setup
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
-
-  // 📍 Region Context Rows (A1:D3)
-  regionContext.forEach(row => {
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    td.colSpan = 4;
-    td.textContent = row.join(" ").trim();
-    td.className = "region-context";
-    tr.appendChild(td);
-    table.appendChild(tr);
-  });
 
   // 🧭 Header Row
   const headRow = document.createElement("tr");
@@ -388,6 +396,7 @@ function renderTable(rows, regionContext) {
   });
   thead.appendChild(headRow);
 
+  // 📊 Data Rows
   rows.forEach(row => {
     const tr = document.createElement("tr");
     const [task, avg2024, avg2025] = row;
@@ -426,7 +435,6 @@ function renderTable(rows, regionContext) {
 
   table.appendChild(thead);
   table.appendChild(tbody);
-  container.innerHTML = "";
   container.appendChild(table);
 }
 
