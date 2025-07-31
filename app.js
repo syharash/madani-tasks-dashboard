@@ -296,21 +296,27 @@ function bindCityInput() {
     const city = input.value.trim();
     if (!country || !state || !city) return;
 
-    const regionKey = `${country}/${state}/${city}`.replace(/\s+/g, " ").trim();
-    const config = sheetIndex[regionKey];
-    localStorage.setItem("regionKey", regionKey);
+let regionKey = `${country}/${state}/${city}`.replace(/\s+/g, " ").trim();
+let config = sheetIndex[regionKey];
 
-    clearError();
+// Special fallback for "USA/USA/USA"
+if (!config && country === "USA" && state === "USA" && city === "USA") {
+  regionKey = "USA";
+  config = sheetIndex[regionKey];
+}
 
-    if (!accessToken) {
-      showError("⚠️ You need to sign in to view data.");
-      return;
-    }
+localStorage.setItem("regionKey", regionKey);
+clearError();
 
-    if (!config) {
-      showError(`❌ Region not found: ${regionKey}`);
-      return;
-    }
+if (!accessToken) {
+  showError("⚠️ You need to sign in to view data.");
+  return;
+}
+
+if (!config) {
+  showError(`❌ Region not found: ${regionKey}`);
+  return;
+}
 
     try {
       const rows = await fetchSheetData(config);
@@ -355,8 +361,16 @@ async function fetchRegionContext(config) {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
-  return (data && data.values) ? data.values : [["Region info unavailable"]];
+  const value = (data && data.values && data.values[0]) ? data.values[0] : [];
+
+  // Fallback for USA summary
+  if (config.id === sheetIndex["USA"].id && value.length === 0) {
+    return [["📍 USA Summary Metrics"]];
+  }
+  return [value];
 }
+
+
 
 // 📊 Table renderer with region context
 function renderTable(rows, regionContext) {
