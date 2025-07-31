@@ -354,12 +354,6 @@ async function fetchRegionContext(config) {
   const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/Sheet1!A1:D1`, {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
-  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/Sheet1!A2:D2`, {
-    headers: { Authorization: `Bearer ${accessToken}` }
-  });
-  const res = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${config.id}/values/Sheet1!A3:D3`, {
-    headers: { Authorization: `Bearer ${accessToken}` }
-  });
   const data = await res.json();
   return data?.values?.[0]?.[0] || "Region info unavailable";
 }
