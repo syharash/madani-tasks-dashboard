@@ -113,17 +113,22 @@ td:first-child {
   padding: 4px 8px;
 }
 /* 📍 Region Context Row */
-.region-context {
-  font-weight: bold;
-  background-color: #e8f4ff;
-  padding: 10px 16px;
-  text-align: center;
-  border-bottom: 2px solid #0078d7;
-  font-size: 1.1rem;
-  color: #005fa1;
-  white-space: pre-wrap;     
-  word-break: break-word;    
-  overflow-wrap: break-word;   
+.region-context-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-left: 4px solid #007bff;
+  font-weight: 500;
+  white-space: normal;
+  word-break: break-word;
+}
+.region-context-line {
+  display: block;
+  font-size: 14px;
+  color: #333;
 }
 .bar-cell {
   position: relative;
