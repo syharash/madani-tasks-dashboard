@@ -162,7 +162,9 @@ td:first-child {
 
 .region-context-line:last-child {
   font-style: italic;
-  color: #444;
+  font-weight: bold;
+  font-size: 14px;    
+  color: #006400;
 }
 
 .bar-cell {
