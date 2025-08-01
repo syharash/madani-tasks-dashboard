@@ -1,5 +1,5 @@
-showWelcome(userName);
-handleLogout();
+//showWelcome(userName);
+//handleLogout();
 // --- Imports ---
 // Utility for resolving region keys based on user selection
 import { resolveRegionKey } from './regionUtils.js';
