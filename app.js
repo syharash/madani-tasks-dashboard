@@ -107,7 +107,7 @@ function setupSignIn() {
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
-      callback: (resp) => {
+      callback: async (resp) => {
         accessToken = resp.access_token;
         alert("✅ Signed in successfully!");
         clearError();
