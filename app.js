@@ -361,13 +361,14 @@ async function fetchRegionContext(config) {
     headers: { Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
-  const value = (data && data.values && data.values[0]) ? data.values[0] : [];
+  const values = (data && data.values) ? data.values : [];
 
   // Fallback for USA summary
-  if (config.id === sheetIndex["USA"].id && value.length === 0) {
+  if (config.id === sheetIndex["USA"].id && values.length === 0) {
     return [["📍 USA Summary Metrics"]];
   }
-  return [value];
+
+  return values; // ✅ Return all rows, not just the first
 }
 
 
