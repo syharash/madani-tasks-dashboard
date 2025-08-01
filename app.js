@@ -377,33 +377,36 @@ function renderTable(rows, regionContext) {
   const container = document.getElementById("tableContainer");
   if (!container || !rows || rows.length === 0) return;
 
- // Clear previous content
-document.getElementById("regionContextWrapper").innerHTML = "";
-const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference in Percentage"];  
-container.innerHTML = "";
+  // 🧹 Clear previous content
+  document.getElementById("regionContextWrapper").innerHTML = "";
+  container.innerHTML = "";
 
-// 📍 Region Context Block
-if (regionContext && regionContext.length > 0) {
-  const wrapper = document.getElementById("regionContextWrapper");
-  const regionOuter = document.createElement("div");
-  regionOuter.className = "region-context-wrapper";
+//  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference in Percentage"];
 
-  const regionBlock = document.createElement("div");
-  regionBlock.className = "region-context-block";
+  // 📍 Region Context Block (Multi-line)
+  if (regionContext && regionContext.length > 0) {
+    const wrapper = document.getElementById("regionContextWrapper");
+    const regionOuter = document.createElement("div");
+    regionOuter.className = "region-context-wrapper";
 
-  regionContext.forEach(row => {
-    const text = row.filter(cell => cell && cell.trim()).join(" ").trim();
-    if (text) {
-      const line = document.createElement("div");
-      line.textContent = text;
-      line.className = "region-context-line";
-      regionBlock.appendChild(line);
-    }
-  });
+    const regionBlock = document.createElement("div");
+    regionBlock.className = "region-context-block";
 
-  regionOuter.appendChild(regionBlock);
-  wrapper.appendChild(regionOuter);
-}
+    regionContext.forEach(row => {
+      const cellText = row[0]?.trim(); // Each row is a single-cell array
+      if (cellText) {
+        const line = document.createElement("div");
+        line.textContent = cellText;
+        line.className = "region-context-line";
+        regionBlock.appendChild(line);
+      }
+    });
+
+    regionOuter.appendChild(regionBlock);
+    wrapper.appendChild(regionOuter);
+  }
+  
+  const headers = ["12 Madani Tasks", "2024 Avg", "2025 Avg", "Difference in Percentage"];
   // 🧭 Table Setup
   const table = document.createElement("table");
   const thead = document.createElement("thead");
@@ -432,6 +435,7 @@ if (regionContext && regionContext.length > 0) {
       tr.appendChild(td);
     });
 
+    // 📈 Difference Cell
     const diffTd = document.createElement("td");
     diffTd.className = "diff-cell";
 
