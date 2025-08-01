@@ -1,4 +1,5 @@
-
+showWelcome(userName);
+handleLogout();
 // --- Imports ---
 // Utility for resolving region keys based on user selection
 import { resolveRegionKey } from './regionUtils.js';
@@ -78,6 +79,27 @@ document.addEventListener("DOMContentLoaded", () => {
   bindClearButton();
 });
 
+function showWelcome(userName) {
+  const authControls = document.getElementById("authControls");
+  authControls.innerHTML = `
+    <span id="welcome-message">👋 Welcome, ${userName}</span>
+    <button id="logout-btn">Logout</button>
+  `;
+  document.getElementById("logout-btn").addEventListener("click", handleLogout);
+}
+
+function handleLogout() {
+  accessToken = "";
+  localStorage.clear();
+
+  const authControls = document.getElementById("authControls");
+  authControls.innerHTML = `<button id="signin-btn">Sign in with Google</button>`;
+  document.getElementById("signin-btn").addEventListener("click", setupSignIn);
+
+  document.getElementById("regionContextWrapper").innerHTML = "";
+  document.getElementById("tableContainer").innerHTML = "";
+  document.getElementById("statusBanner").textContent = "";
+}
 // 🔐 Sign-in logic
 function setupSignIn() {
   const btn = document.getElementById("signin-btn");
@@ -89,6 +111,15 @@ function setupSignIn() {
         accessToken = resp.access_token;
         alert("✅ Signed in successfully!");
         clearError();
+
+         // 🔍 Fetch user info
+        const userRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        const userData = await userRes.json();
+        const userName = userData.name || "User";
+
+        showWelcome(userName);
       }
     });
     tokenClient.requestAccessToken();
