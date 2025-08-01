@@ -106,14 +106,14 @@ function setupSignIn() {
   btn.onclick = () => {
     const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
-      scope: "https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
+      scope: "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/drive.metadata.readonly",
       callback: async (resp) => {
         accessToken = resp.access_token;
         alert("✅ Signed in successfully!");
         clearError();
 
          // 🔍 Fetch user info
-        const userRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+        const userRes = await fetch("https://openidconnect.googleapis.com/v1/userinfo", { 
           headers: { Authorization: `Bearer ${accessToken}` }
         });
         const userData = await userRes.json();
