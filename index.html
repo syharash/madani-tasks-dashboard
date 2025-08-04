@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🌍 Regional Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <h2 style="text-align: center;">📍 Regional Dashboard</h2>
+ 
+
+  <!-- 🔐 Google Sign-in Button -->
+  <!-- 🔐 Auth Controls -->
+  <div id="authControls">
+    <button id="signin-btn">Sign in with Google</button>
+  </div>
+
+  <!-- ⚠️ Status Banner -->
+  <div id="statusBanner" class="banner"></div>
+
+  <!-- 🌐 Region Selectors -->
+  <div class="selector-group">
+
+    <!-- 🌎 Country, State, City (inline layout) -->
+    <div id="regionFilters">
+
+      <!-- Country Dropdown -->
+      <select id="countryDropdown" aria-label="Select a country">
+        <option value="">-- Choose a country --</option>
+        <!-- Country options will be dynamically loaded -->
+      </select>
+
+      <!-- State Dropdown -->
+      <select id="stateDropdown" disabled aria-label="Select a state">
+        <option value="">-- Choose a state --</option>
+        <!-- State options will be dynamically loaded -->
+      </select>
+
+      <!-- City Input + Clear Button -->
+      <div class="city-input-wrap">
+        <input list="city-options" id="city-input" placeholder="Start typing a city..." disabled aria-label="City input" />
+        <button id="clearBtn" title="Clear selection">❌</button>
+      </div>
+
+    </div>
+
+    <!-- City options datalist -->
+    <datalist id="city-options"></datalist>
+
+    <!-- 📎 Contextual Note -->
+    <p id="region-note" class="input-note"></p>
+
+  </div>
+
+  <!-- 📊 Dashboard Display -->
+  <div id="dashboardWrapper">
+    <div id="regionContextWrapper"></div>
+    <div id="tableContainer"></div>
+  </div>
+
+  <!-- 🚀 Scripts -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script type="module" src="app.js"></script>
+
+</body>
+</html>

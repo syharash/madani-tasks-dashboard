@@ -1,0 +1,12 @@
+{
+  "appId": "com.madani.tasks",
+  "appName": "Madani Dashboard",
+  "webDir": "web",
+  "plugins": {
+    "SocialLogin": {
+      "google": {
+        "webClientId": "http://515935803707-7a2mkht6r31lha26i9tdpdbi47vfemej.apps.googleusercontent.com"
+      }
+    }
+  }
+}
