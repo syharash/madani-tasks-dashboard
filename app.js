@@ -110,7 +110,7 @@ function handleLogout() {
 }
 // 🔐 Sign-in logic
 import { Plugins } from '@capacitor/core';
-const { SocialLogin } = Plugins;
+//const { SocialLogin } = Plugins;
 
 function setupSignIn() {
   console.log("🔧 setupSignIn() called");
